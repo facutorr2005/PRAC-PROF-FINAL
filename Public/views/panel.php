@@ -60,9 +60,5 @@
             <div class="info-pie"><a class="enlace-pie" href="https://www.instagram.com/">📷 Instagram</a></div>
         </div>
     </div>
-    <script>
-
-    </script>
 </body>
-
 </html>

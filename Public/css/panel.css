@@ -118,3 +118,188 @@ body{
     border-left: solid 2px var(--color-terciario);
     border-right: solid 2px var(--color-terciario);
 }
+
+@media (max-width: 1024px) {
+    .logo-titulo {
+        margin-left: 2rem;
+    }
+    
+    .botones {
+        margin-right: 2rem;
+    }
+    
+    .contenido {
+        width: 90%;
+        grid-template-areas:
+        "A1 A2"
+        "A3 A4"
+        "A5 A6";
+    }
+    
+    .oferta {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .pie-pagina {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+    
+    .contactos, .contactos-desarrollo, .redes-sociales {
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .encabezado {
+        height: 6rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 0;
+    }
+    
+    .logo-titulo {
+        margin: 0;
+        margin-left: 0;
+    }
+    
+    .logo {
+        height: 60px;
+        width: 60px;
+    }
+    
+    .titulo {
+        font-size: 40px;
+    }
+    
+    .botones {
+        margin-right: 0;
+        gap: 1rem;
+    }
+    
+    .boton {
+        font-size: 16px;
+        width: 6rem;
+        padding: 0.5rem;
+    }
+    
+    .contenido {
+        width: 95%;
+        grid-template-areas:
+        "A1 A2"
+        "A3 A4"
+        "A5 A6";
+        gap: 0.5rem;
+    }
+    
+    .oferta {
+        width: 100%;
+        height: 150px;
+    }
+    
+    .pie-pagina {
+        height: auto;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        text-align: center;
+    }
+    
+    .contactos, .contactos-desarrollo, .redes-sociales {
+        width: 100%;
+        border-left: none;
+        border-right: none;
+        border-top: solid 2px var(--color-terciario);
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 1rem;
+    }
+    
+    .titulo-pie {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .encabezado {
+        height: auto;
+        padding: 1rem;
+    }
+    
+    .logo {
+        height: 50px;
+        width: 50px;
+    }
+    
+    .titulo {
+        font-size: 30px;
+    }
+    
+    .botones {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .boton {
+        width: 100%;
+        font-size: 14px;
+        padding: 0.7rem;
+    }
+    
+    .contenido {
+        width: 95%;
+        grid-template-areas:
+        "A1"
+        "A2"
+        "A3"
+        "A4"
+        "A5"
+        "A6";
+        gap: 0.8rem;
+    }
+    
+    .oferta {
+        width: 100%;
+        height: 180px;
+        justify-self: center;
+    }
+    
+    .pie-pagina {
+        padding: 0.5rem;
+    }
+    
+    .titulo-pie {
+        font-size: 18px;
+    }
+    
+    .info-pie {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 320px) {
+    .titulo {
+        font-size: 25px;
+    }
+    
+    .boton {
+        font-size: 12px;
+        padding: 0.5rem;
+    }
+    
+    .oferta {
+        height: 150px;
+    }
+    
+    .titulo-pie {
+        font-size: 16px;
+    }
+    
+    .info-pie {
+        font-size: 12px;
+    }
+}
