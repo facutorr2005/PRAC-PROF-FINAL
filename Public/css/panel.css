@@ -1,0 +1,120 @@
+:root{
+    --color-principal: rgb(231, 230, 216);
+    --color-secundario: rgb(238, 238, 9);
+    --color-terciario: rgba(0, 0, 0, 0.349);
+    --color-cuarto: black;
+    --fuente: 'Poppins', sans-serif;
+}
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+    font-family: var(--fuente);
+    background-color: var(--color-principal);
+}
+.encabezado{
+    background-color: var(--color-secundario);
+    height: 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 3px var(--color-terciario);
+}
+.logo-titulo{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    margin-left: 4rem;
+}
+.logo{
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    border: none;
+}
+.titulo{
+    font-size: 70px;
+    font-weight: bold;
+}
+.botones{
+    margin-right: 4rem;
+    display: flex;
+    gap: 1.5rem;
+}
+.boton{
+    border: none;
+    border-radius: 7px;
+    font-size: 20px;
+    width: 7rem;
+    background-color: var(--color-principal);
+    font-weight: bold;
+    cursor: pointer;
+}
+.boton:hover{
+    background-color: rgb(192, 192, 191);
+}
+.contenido{
+    background-color: var(--color-principal);
+    margin: 10px;
+    width: 86%;
+    margin: 1rem auto;
+    display: grid;   
+    grid-template-areas:
+    "A1 A2 A3"
+    "A4 A5 A6";
+    gap: 1rem;
+}
+.oferta{
+    width: 350px;
+    height: 200px;
+    object-fit:fill;
+    border: solid 7px var(--color-cuarto);
+    border-radius: 7px;
+}
+.oferta-1{
+    grid-area: A1;
+}
+.oferta-2{
+    grid-area: A2;
+}
+.oferta-3{
+    grid-area: A3;
+}
+.oferta-4{
+    grid-area: A4;
+}
+.oferta-5{
+    grid-area: A5;
+}
+.oferta-6{
+    grid-area: A6;
+}
+.pie-pagina{
+    height: 7rem;
+    background-color: var(--color-secundario);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: solid 3px var(--color-terciario);
+    padding: 1rem;
+    padding-left: 7rem;
+    padding-right: 7rem;
+}
+.titulo-pie{
+    font-size: 25px;
+    font-weight: bold;
+}
+.enlace-pie{
+    text-decoration: none;
+    color: var(--color-cuarto);
+}
+.contactos, .contactos-desarrollo, .redes-sociales{
+    width: 500px;
+    padding-left: 7px;
+    padding-right: 7px;
+    border-left: solid 2px var(--color-terciario);
+    border-right: solid 2px var(--color-terciario);
+}
