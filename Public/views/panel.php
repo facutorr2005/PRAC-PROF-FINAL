@@ -18,7 +18,6 @@
         <div class="titulo">
             Q-Pay
         </div>
-        </div>
         <div class="botones">
             <button onclick="location.href='compra.php'" class="boton">Iniciar Compra</button>
             <button onclick="location.href='historial.php'"class="boton">Historial Compras</button>
