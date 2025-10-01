@@ -41,3 +41,55 @@ CREATE TABLE IF NOT EXISTS `Usuarios` (
   UNIQUE KEY `uniq_correo` (`Correo`),
   UNIQUE KEY `uniq_dni` (`Dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+SET NAMES utf8mb4;
+
+-- Agregar columnas nuevas si no existen
+ALTER TABLE `Usuarios`
+  ADD COLUMN IF NOT EXISTS `tipo_documento`
+    ENUM('DNI','LC','LE','CI','Pasaporte') NOT NULL DEFAULT 'DNI'
+    AFTER `CreadoEn`,
+  ADD COLUMN IF NOT EXISTS `numero_documento`
+    VARCHAR(32) NOT NULL
+    AFTER `tipo_documento`;
+
+-- Backfill: si usabas `Dni`, copiamos su valor a `numero_documento` cuando esté vacío
+UPDATE `Usuarios`
+   SET `numero_documento` = COALESCE(NULLIF(TRIM(`numero_documento`),''), TRIM(`Dni`))
+ WHERE (TRIM(`numero_documento`) = '' OR `numero_documento` IS NULL)
+   AND `Dni` IS NOT NULL;
+
+-- Índice único en documento (nuevo)
+ALTER TABLE `Usuarios`
+  ADD UNIQUE KEY `uniq_documento` (`tipo_documento`,`numero_documento`);
+
+-- (Opcional) eliminar índice único viejo de Dni si existía
+-- OJO: solo si ya no lo usás en la app.
+-- SHOW INDEX FROM `Usuarios`;  -- para ver el nombre exacto
+DROP INDEX `uniq_dni` ON `Usuarios`;
+
+--  (Opcional) eliminar columna Dni si ya migraste todo y no la vas a usar
+-- ALTER TABLE `Usuarios` DROP COLUMN `Dni`;
+
+-- Asegurar índice único en correo (por si falta)
+ALTER TABLE `Usuarios`
+  ADD UNIQUE KEY IF NOT EXISTS `uniq_correo` (`Correo`);
+
+-- Crear tabla de restablecimientos si no existe
+CREATE TABLE IF NOT EXISTS `restablecimientos_contrasena` (
+  `id`           INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `usuario_id`   INT UNSIGNED NOT NULL,
+  `codigo_hash`  CHAR(60)     NOT NULL,
+  `vence_el`     DATETIME     NOT NULL,
+  `intentos`     TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `usado`        TINYINT(1)   NOT NULL DEFAULT 0,
+  `creado_el`    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `idx_usuario_id` (`usuario_id`),
+  KEY `idx_vence_el` (`vence_el`),
+  KEY `idx_usado` (`usado`),
+  CONSTRAINT `fk_rc_usuario`
+    FOREIGN KEY (`usuario_id`) REFERENCES `Usuarios`(`Id`)
+    ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

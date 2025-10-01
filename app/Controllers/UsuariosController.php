@@ -18,12 +18,15 @@ class UsuariosController {
     }
 
     // GET /Usuarios/iniciarSesion
-    public function iniciarSesion(): void {    // Muestra el formulario de login
+    public function iniciarSesion(): void
+    {
         $titulo = 'Iniciar sesión';
-        $ok    = $_GET['ok']    ?? null;       // Mensaje opcional (?ok=...)
-        $error = $_GET['error'] ?? null;       // Mensaje de error (?error=...)
+        $ok     = $_GET['ok']    ?? null; // mensaje de éxito opcional
+        $error  = $_GET['error'] ?? null; // mensaje de error opcional
+
         $this->renderizar('Usuarios/iniciar_sesion.php', compact('titulo','ok','error'));
     }
+
 
     // POST /Usuarios/autenticar
     public function autenticar(): void {       // Procesa el login

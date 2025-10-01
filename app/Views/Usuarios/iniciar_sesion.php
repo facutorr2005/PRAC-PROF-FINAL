@@ -21,4 +21,11 @@
   <button type="submit">Entrar</button>
 </form>
 
-<p>¿No tenés cuenta? <a href="<?= BASE_URL ?>/Usuarios/registrar">Crear una cuenta</a></p>
+<p>
+  <a href="<?= BASE_URL ?>/Contrasenas/olvidada">¿Olvidaste tu contraseña?</a>
+</p>
+
+<p>
+  ¿No tenés cuenta?
+  <a href="<?= BASE_URL ?>/Usuarios/registrar">Crear una cuenta</a>
+</p>
