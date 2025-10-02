@@ -1,3 +1,67 @@
-body{
-    color: red;
+:root {
+  --color-principal: rgb(231, 230, 216);
+  --color-secundario: rgb(238, 238, 9);
+  --color-terciario: rgba(0, 0, 0, 0.349);
+  --color-cuarto: black;
+  --fuente: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--fuente);
+  background-color: var(--color-principal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formulario {
+  border: solid 2px var(--color-cuarto);
+  border-radius: 7px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.eslogan {
+  font-size: 16px;
+}
+
+#miFormulario {
+  border: dashed 2px var(--color-terciario);
+  border-radius: 7px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 95%;
+}
+
+.links {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.7rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-cuarto);
+  font-size: 20px;
+}
+
+a:hover {
+  color: var(--color-terciario);
 }
