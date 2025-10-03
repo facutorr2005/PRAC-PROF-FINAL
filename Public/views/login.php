@@ -1,4 +1,5 @@
 <?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +21,11 @@
         <div class="eslogan">
           Expertos en Agilidad
         </div>
-        <form id="miFormulario" action="<?= BASE_URL ?> /Usuarios/autenticar" method="post">
+        <div class="error"> 
+            <?php if(isset($_SESSION['error'])) { ?>
+           <?php echo $_SESSION['error']; }?>
+        </div>
+        <form id="miFormulario" action="auth.php" method="post">
             <input id="correo" name="correo" type="email" placeholder="Introduzca su Correo">
             <input id="contrasena" name="contrasena" type="password" placeholder="Introduzca su Contraseña">
             <button type="submit">Iniciar Sesión</button>
@@ -32,8 +37,8 @@
     </div>
 
     <script>
-    document.getElementById("miFormulario").addEventListener("submit", function(e) {
-      e.preventDefault();
+   document.getElementById("miFormulario").addEventListener("submit", function(e) {
+   //   e.preventDefault();
       
       const correo = document.getElementById("correo").value.trim();
       const clave = document.getElementById("contrasena").value.trim();
