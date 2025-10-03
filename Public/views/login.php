@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +20,7 @@
         <div class="eslogan">
           Expertos en Agilidad
         </div>
-        <form id="miFormulario" action="" method="post">
+        <form id="miFormulario" action="<?= BASE_URL ?> /Usuarios/autenticar" method="post">
             <input id="correo" name="correo" type="email" placeholder="Introduzca su Correo">
             <input id="contrasena" name="contrasena" type="password" placeholder="Introduzca su Contraseña">
             <button type="submit">Iniciar Sesión</button>

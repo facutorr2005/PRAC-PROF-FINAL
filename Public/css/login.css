@@ -22,6 +22,7 @@ body {
 }
 
 .formulario {
+    background-color: var(--color-secundario);
   border: solid 2px var(--color-cuarto);
   border-radius: 7px;
   padding: 1rem;
@@ -46,8 +47,36 @@ body {
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
   width: 95%;
+}
+#correo, #contrasena {
+    background-color: var(--color-cuarto);
+    border: none;
+    border-radius: 7px;
+    padding: 5px;
+    padding-left: 2px;
+    width: 100%;
+    color: var(--color-principal);
+}
+#correo::placeholder, #contrasena::placeholder {
+    color: var(--color-principal);
+    padding: 5px;
+    font-size: 15px;
+}
+button{
+    border: none;
+    cursor: pointer;
+    background-color: var(--color-principal);
+    font-size: 20px;
+    width: 60%;
+    height: 35px;
+    border-radius: 7px;
+}
+button:hover{
+  background-color: rgb(196, 195, 182);
 }
 
 .links {
@@ -59,7 +88,7 @@ body {
 a {
   text-decoration: none;
   color: var(--color-cuarto);
-  font-size: 20px;
+  font-size: 15px;
 }
 
 a:hover {
