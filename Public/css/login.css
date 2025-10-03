@@ -22,7 +22,7 @@ body {
 }
 
 .formulario {
-    background-color: var(--color-secundario);
+  background-color: var(--color-secundario);
   border: solid 2px var(--color-cuarto);
   border-radius: 7px;
   padding: 1rem;
