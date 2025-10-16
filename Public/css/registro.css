@@ -25,61 +25,81 @@ body {
   background-color: var(--color-secundario);
   border: solid 2px var(--color-cuarto);
   border-radius: 7px;
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 35%;
-  text-align: center;
+  align-items: center;
+  gap: 1rem;
+  width: 55%;
 }
 
 .titulo {
   font-size: 28px;
   font-weight: bold;
-}
-
-.info {
-  font-size: 15px;
-  font-weight: 500;
-  margin-top: 0.5rem;
-  margin-bottom: 0.8rem;
-  line-height: 1.4;
+  text-align: center;
 }
 
 #miFormulario {
   border: dashed 2px var(--color-terciario);
   border-radius: 7px;
-  padding: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "nombre apellido"
+    "label label"
+    "fecha dni"
+    "correo correo"
+    "pass repetir"
+    "boton boton";
+  gap: 0.8rem 1rem;
   width: 95%;
 }
 
-#correo {
+#nombre { grid-area: nombre; }
+#apellido { grid-area: apellido; }
+label[for="fechaNacimiento"] { grid-area: label; }
+#fechaNacimiento { grid-area: fecha; }
+#dni { grid-area: dni; }
+#correo { grid-area: correo; }
+#contrasena { grid-area: pass; }
+#repetircontrasena { grid-area: repetir; }
+button { grid-area: boton; }
+
+/* Campos de entrada */
+#miFormulario input[type="text"],
+#miFormulario input[type="number"],
+#miFormulario input[type="email"],
+#miFormulario input[type="password"],
+#miFormulario input[type="date"] {
   background-color: var(--color-cuarto);
   border: none;
   border-radius: 7px;
-  padding: 6px;
+  padding: 7px;
   width: 100%;
   color: var(--color-principal);
   font-size: 15px;
 }
 
-#correo::placeholder {
+#miFormulario input::placeholder {
   color: var(--color-principal);
   font-size: 15px;
   padding-left: 5px;
 }
 
+label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-cuarto);
+}
+
+/* Botón */
 button {
   border: none;
   cursor: pointer;
   background-color: var(--color-principal);
   font-size: 18px;
-  width: 60%;
   height: 35px;
   border-radius: 7px;
   transition: background-color 0.2s;
@@ -88,3 +108,22 @@ button {
 button:hover {
   background-color: rgb(196, 195, 182);
 }
+
+/* Links */
+.links {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-cuarto);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--color-terciario);
+}
+
