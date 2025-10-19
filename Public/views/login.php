@@ -22,10 +22,10 @@ session_start();
           Expertos en Agilidad
         </div>
         <div class="error"> 
-            <?php if(isset($_SESSION['error'])) { ?>
-           <?php echo $_SESSION['error']; }?>
+          <?php  ?>
         </div>
-        <form id="miFormulario" action="auth.php" method="post">
+        <div class="error" id="error-msg"></div>
+        <form id="miFormulario" action="../../app/controllers/UsuariosController.php" method="post">
             <input id="correo" name="correo" type="email" placeholder="Introduzca su Correo">
             <input id="contrasena" name="contrasena" type="password" placeholder="Introduzca su Contraseña">
             <button type="submit">Iniciar Sesión</button>
@@ -36,18 +36,22 @@ session_start();
         </div>
     </div>
 
-    <script>
-   document.getElementById("miFormulario").addEventListener("submit", function(e) {
-   //   e.preventDefault();
-      
+  <script>
+  document.getElementById("miFormulario").addEventListener("submit", function(e) {
       const correo = document.getElementById("correo").value.trim();
       const clave = document.getElementById("contrasena").value.trim();
-      
+      const errorDiv = document.getElementById("error-msg");
+
+      errorDiv.textContent = ""; // Limpiar mensaje anterior
+
       if (correo === "" || clave === "") {
-        alert("Todos los campos son obligatorios.");
+        e.preventDefault(); // Evita el envío del formulario
+        errorDiv.textContent = "⚠️ Todos los campos son obligatorios.";
+        errorDiv.style.color = "red";
         return;
       }
-    });
-    </script>
+});
+</script>
+
 </body>
 </html>

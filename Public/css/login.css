@@ -94,3 +94,12 @@ a {
 a:hover {
   color: var(--color-terciario);
 }
+.error {
+  color: red;
+  font-family: var(--fuente);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
