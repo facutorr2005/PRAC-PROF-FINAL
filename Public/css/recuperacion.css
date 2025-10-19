@@ -30,7 +30,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 35%;
+  width: 100%;
+  max-width: 400px; 
   text-align: center;
 }
 
@@ -87,4 +88,13 @@ button {
 
 button:hover {
   background-color: rgb(196, 195, 182);
+}
+.error {
+  color: red;
+  font-family: var(--fuente);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
 }

@@ -9,25 +9,26 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/digitos.css">
+  <link rel="stylesheet" href="../Public/css/digitos.css">
 
 </head>
 
 <body>
 
   <div class="formulario">
-    <h1 class="titulo">Recuperación de Contraseña</h1>
-    <p class="eslogan">Revise su email e introduzca el código</p>
-
-    <form id="codeForm">
+    <div class="titulo">Recuperación de Contraseña</div>
+    <div class="eslogan">Revise su email e introduzca el código</div>
+    <div class="error" style="color:red; margin-top:10px;"></div>
+    <form id="codeForm" action="../app/controllers/DigitosController.php" method="POST">
       <div class="code-input">
-        <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input type="text" name="digit1" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input type="text" name="digit2" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input type="text" name="digit3" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input type="text" name="digit4" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input type="text" name="digit5" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input type="text" name="digit6" maxlength="1" pattern="\d*" inputmode="numeric">
       </div>
+
       <button type="submit">Enviar Código</button>
     </form>
   </div>
@@ -35,6 +36,7 @@
   <script>
     const inputs = document.querySelectorAll('.code-input input');
     const form = document.getElementById('codeForm');
+    const errorDiv = document.querySelector('.error');
 
     // Auto avance y retroceso
     inputs.forEach((input, index) => {
@@ -54,17 +56,17 @@
 
     // Validación del formulario
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
       const values = Array.from(inputs).map(i => i.value);
       const code = values.join('');
 
-      // 🔧 Corrección: verificar si alguno está vacío
+      // Limpiar mensaje previo
+      errorDiv.textContent = '';
+
       if (values.some(v => v === '')) {
-        alert('Por favor, complete los 6 dígitos antes de continuar.');
-      } else {
-        alert('Código ingresado: ' + code);
-        // aquí podrías enviar el código al backend con fetch()
-      }
+        e.preventDefault(); // Evita que se envíe el form
+        errorDiv.textContent = 'Por favor, complete los 6 dígitos antes de continuar.';
+      } 
+      // Si quieres, aquí puedes dejar que se envíe automáticamente el form si todo está correcto
     });
   </script>
 

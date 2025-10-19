@@ -7,14 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/recuperacion.css">
+  <link rel="stylesheet" href="../Public/css/recuperacion.css">
 </head>
 <body>
   <div class="contenido">
     <div class="titulo">Recuperación de Contraseña</div>
     <div class="info">Se le enviará un correo electrónico con un código de 6 dígitos para recuperar la contraseña.</div>
-
-    <form id="miFormulario" action="<?= BASE_URL ?>/Contrasenas/Olvidada" method="post">
+    <div class="error"></div>
+    <form id="miFormulario" action="../app/controllers/RecuperacionesController.php" method="post">
       <input id="correo" type="email" placeholder="Introduzca su Correo">
       <button type="submit">Enviar Código</button>
     </form>
@@ -24,11 +24,20 @@
   document.getElementById("miFormulario").addEventListener("submit", function(e) {
     e.preventDefault();
     const correo = document.getElementById("correo").value.trim();
-    if (correo === "") {
-      alert("Introduzca un correo electrónico.");
-      return;
-    }
-  });
+    const errorDiv = document.querySelector(".error");
+
+  if (correo === "") {
+    errorDiv.textContent = "Introduzca un correo electrónico.";
+    return;
+  }
+
+  // Si todo está bien, limpiar el mensaje
+  errorDiv.textContent = "";
+
+  // Aquí podrías enviar el form si quieres usar AJAX o simplemente:
+  this.submit();
+});
+
   </script>
 </body>
 </html>

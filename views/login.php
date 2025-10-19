@@ -10,7 +10,7 @@ session_start();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../Panel/css/login.css">
 </head>
 
 <body>
@@ -25,7 +25,7 @@ session_start();
           <?php  ?>
         </div>
         <div class="error" id="error-msg"></div>
-        <form id="miFormulario" action="../../app/controllers/UsuariosController.php" method="post">
+        <form id="miFormulario" action="../app/controllers/UsuariosController.php" method="post">
             <input id="correo" name="correo" type="email" placeholder="Introduzca su Correo">
             <input id="contrasena" name="contrasena" type="password" placeholder="Introduzca su Contraseña">
             <button type="submit">Iniciar Sesión</button>

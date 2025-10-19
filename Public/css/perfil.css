@@ -1,39 +1,172 @@
-body{
+:root{
+    --color-principal: rgb(231, 230, 216);
+    --color-secundario: rgb(238, 238, 9);
+    --color-terciario: rgba(0, 0, 0, 0.349);
+    --color-cuarto: black;
+    --fuente: 'Poppins', sans-serif;
+}
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow:hidden;
-  background-color: #fae62e;
+body{
+    min-height: 100vh;
+    font-family: var(--fuente);
+    background-color: var(--color-principal);
+    display: flex;
+    flex-direction: column;
 }
 
-ul li {
-  float: left;
+/* ENCABEZADO */
+.encabezado{
+    background-color: var(--color-secundario);
+    min-height: 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 3px var(--color-terciario);
+    padding: 1rem 2rem;
+    flex-shrink: 0;
 }
 
-ul li a {
-  display:flex;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-ul li a:hover {
-  background-color: #a2acb1;
+.logoTitulo{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
 }
-.foto-perfil{
-    width: 50px;
-    height: 50%;
-    border-radius: 50%;
+
+.titulo{
+    font-size: clamp(30px, 5vw, 70px);
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.botones{
+    display: flex;
+    gap: 1.5rem;
+}
+
+.boton{
+    border: none;
+    border-radius: 7px;
+    font-size: clamp(14px, 1.5vw, 20px);
+    min-width: 7rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-principal);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover{
+    background-color: rgb(192, 192, 191);
+}
+
+.eliminarBoton{
+    background-color: red;
+    color: white;
+}
+
+.eliminarBoton:hover{
+    background-color: darkred;
+    transform: scale(1.05);
+}
+
+
+.usuarioInfo{
+    font-weight: 600;
+    color: var(--color-cuarto);
+    margin-left: 2rem;
+    white-space: nowrap;
+}
+
+/* CONTENEDOR PERFIL */
+.contenidoPerfil{
+    max-width: 600px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background-color: var(--color-principal);
+    border-radius: 10px;
+    border: 3px solid var(--color-terciario);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* TÍTULO PERFIL */
+.perfilTitulo{
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 600;
+    color: var(--color-cuarto);
+    text-align: center;
+}
+
+/* FORMULARIO PERFIL */
+.formularioPerfil{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.grupoCampo{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.etiquetaCampo{
+    font-weight: 600;
+    color: var(--color-cuarto);
+}
+
+.entradaCampo{
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--color-terciario);
+    border-radius: 7px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.entradaCampo:focus{
+    border-color: var(--color-secundario);
+    box-shadow: 0 0 5px var(--color-secundario);
+}
+
+/* DIV ERROR */
+.errorCampo{
+    color: red;
+    font-size: 0.9rem;
+    min-height: 1.2em; /* para evitar que el layout salte cuando aparece el texto */
+}
+
+/* BOTÓN GUARDAR */
+.guardarBoton{
+    padding: 0.8rem 1.5rem;
+    font-size: clamp(16px, 2vw, 20px);
+    border: none;
+    border-radius: 7px;
+    background-color: var(--color-secundario);
+    color: var(--color-cuarto);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: center;
+}
+
+.guardarBoton:hover{
+    background-color: rgb(192, 192, 191);
+    transform: scale(1.05);
 }
