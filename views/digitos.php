@@ -17,7 +17,7 @@
 
   <div class="formulario">
     <div class="titulo">Recuperación de Contraseña</div>
-    <div class="eslogan">Revise su email e introduzca el código</div>
+    <div class="eslogan">Revise su email e introduzca el código, tiene 10 minutos.</div>
     <div class="error" style="color:red; margin-top:10px;"></div>
     <form id="codeForm" action="../app/controllers/DigitosController.php" method="POST">
       <div class="code-input">
@@ -28,7 +28,7 @@
         <input type="text" name="digit5" maxlength="1" pattern="\d*" inputmode="numeric">
         <input type="text" name="digit6" maxlength="1" pattern="\d*" inputmode="numeric">
       </div>
-
+      <div class="temporizador" id="temporizador">10:00</div>
       <button type="submit">Enviar Código</button>
     </form>
   </div>
@@ -65,9 +65,28 @@
       if (values.some(v => v === '')) {
         e.preventDefault(); // Evita que se envíe el form
         errorDiv.textContent = 'Por favor, complete los 6 dígitos antes de continuar.';
-      } 
+      }
       // Si quieres, aquí puedes dejar que se envíe automáticamente el form si todo está correcto
     });
+    // Contador regresivo de 10 minutos
+    const temporizador = document.getElementById('temporizador');
+    let tiempo = 10 * 60; // 10 minutos en segundos
+
+    const interval = setInterval(() => {
+      const minutos = Math.floor(tiempo / 60);
+      const segundos = tiempo % 60;
+
+      // Mostrar en formato MM:SS
+      temporizador.textContent = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+      tiempo--;
+
+      if (tiempo < 0) {
+        clearInterval(interval);
+        // Redirigir al finalizar
+        window.location.href = 'recuperacion.php';
+      }
+    }, 1000);
   </script>
 
 </body>

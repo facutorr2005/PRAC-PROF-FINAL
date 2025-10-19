@@ -102,3 +102,10 @@ button:hover {
   margin-bottom: 0.5rem;
   width: 100%;
 }
+
+.temporizador {
+  font-size: 20px;
+  font-weight: 600;
+  color: red;
+  margin-bottom: 1rem;
+}
