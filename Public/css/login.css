@@ -25,26 +25,30 @@ body {
   background-color: var(--color-secundario);
   border: solid 2px var(--color-cuarto);
   border-radius: 7px;
-  padding: 1rem;
+  padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.8rem;
+  width: 45%;
 }
 
 .titulo {
   font-size: 32px;
   font-weight: bold;
+  text-align: center;
 }
 
 .eslogan {
   font-size: 16px;
+  text-align: center;
 }
 
 #miFormulario {
   border: dashed 2px var(--color-terciario);
   border-radius: 7px;
-  padding: 0.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,30 +56,37 @@ body {
   gap: 1rem;
   width: 95%;
 }
-#correo, #contrasena {
-    background-color: var(--color-cuarto);
-    border: none;
-    border-radius: 7px;
-    padding: 5px;
-    padding-left: 2px;
-    width: 100%;
-    color: var(--color-principal);
+
+#correo,
+#contrasena {
+  background-color: var(--color-cuarto);
+  border: none;
+  border-radius: 7px;
+  padding: 7px;
+  width: 100%;
+  color: var(--color-principal);
+  font-size: 15px;
 }
-#correo::placeholder, #contrasena::placeholder {
-    color: var(--color-principal);
-    padding: 5px;
-    font-size: 15px;
+
+#correo::placeholder,
+#contrasena::placeholder {
+  color: var(--color-principal);
+  padding: 5px;
+  font-size: 15px;
 }
-button{
-    border: none;
-    cursor: pointer;
-    background-color: var(--color-principal);
-    font-size: 20px;
-    width: 60%;
-    height: 35px;
-    border-radius: 7px;
+
+button {
+  border: none;
+  cursor: pointer;
+  background-color: var(--color-principal);
+  font-size: 20px;
+  width: 60%;
+  height: 35px;
+  border-radius: 7px;
+  transition: background-color 0.2s;
 }
-button:hover{
+
+button:hover {
   background-color: rgb(196, 195, 182);
 }
 
@@ -83,6 +94,8 @@ button:hover{
   margin-top: 0.5rem;
   display: flex;
   gap: 0.7rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 a {
@@ -94,6 +107,7 @@ a {
 a:hover {
   color: var(--color-terciario);
 }
+
 .error {
   color: red;
   font-family: var(--fuente);
@@ -102,4 +116,142 @@ a:hover {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   width: 100%;
+}
+
+/* ==========================
+   📱 RESPONSIVE DESIGN
+   ========================== */
+
+/* 1024px */
+@media (max-width: 1024px) {
+  .formulario {
+    width: 60%;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .titulo {
+    font-size: 30px;
+  }
+
+  button {
+    width: 65%;
+  }
+}
+
+/* 768px */
+@media (max-width: 768px) {
+  .formulario {
+    width: 70%;
+    padding: 1rem;
+  }
+
+  .titulo {
+    font-size: 28px;
+  }
+
+  .eslogan {
+    font-size: 15px;
+  }
+
+  #miFormulario {
+    width: 100%;
+    gap: 0.9rem;
+  }
+
+  button {
+    width: 70%;
+    font-size: 18px;
+  }
+}
+
+/* 600px */
+@media (max-width: 600px) {
+  .formulario {
+    width: 80%;
+  }
+
+  .titulo {
+    font-size: 26px;
+  }
+
+  .eslogan {
+    font-size: 14px;
+  }
+
+  #correo,
+  #contrasena {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  button {
+    font-size: 16px;
+    width: 75%;
+  }
+
+  a {
+    font-size: 14px;
+  }
+}
+
+/* 480px */
+@media (max-width: 480px) {
+  .formulario {
+    width: 90%;
+    padding: 0.8rem;
+  }
+
+  .titulo {
+    font-size: 24px;
+  }
+
+  .eslogan {
+    font-size: 13px;
+  }
+
+  #correo,
+  #contrasena {
+    font-size: 13.5px;
+  }
+
+  button {
+    width: 80%;
+    font-size: 15px;
+  }
+
+  a {
+    font-size: 13px;
+  }
+}
+
+/* 320px */
+@media (max-width: 320px) {
+  .formulario {
+    width: 95%;
+    padding: 0.6rem;
+  }
+
+  .titulo {
+    font-size: 22px;
+  }
+
+  .eslogan {
+    font-size: 12px;
+  }
+
+  #correo,
+  #contrasena {
+    font-size: 13px;
+    padding: 5px;
+  }
+
+  button {
+    width: 85%;
+    font-size: 14px;
+    height: 32px;
+  }
+
+  a {
+    font-size: 12px;
+  }
 }
