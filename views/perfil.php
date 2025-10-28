@@ -12,22 +12,18 @@
 </head>
 
 <body>
-    <!-- ENCABEZADO -->
     <div class="encabezado">
         <div class="logoTitulo">
             <img class="logo" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="logo">
             <div class="titulo">Q-Pay</div>
         </div>
+
         <div class="botones">
             <button onclick="location.href='panel.php'" class="boton">Volver al inicio</button>
             <button onclick="location.href='eliminar.php'" class="boton eliminarBoton">Eliminar cuenta</button>
         </div>
-        <div class="usuarioInfo">
-            Juan Pérez
-        </div>
     </div>
 
-    <!-- PERFIL EDITABLE -->
     <div class="contenidoPerfil">
         <div class="perfilTitulo">Mi Perfil</div>
         <form action="../App/Controllers/EdicionesController.php" method="POST" class="formularioPerfil" id="formPerfil">
