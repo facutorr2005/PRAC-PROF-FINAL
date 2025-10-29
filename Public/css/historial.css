@@ -17,6 +17,53 @@ body {
   font-family: var(--fuente);
   background-color: var(--color-principal);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.encabezado{
+    background-color: var(--color-secundario);
+    min-height: 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 3px var(--color-terciario);
+    padding: 1rem 2rem;
+    flex-shrink: 0;
+}
+
+.titulo{
+    font-size: clamp(30px, 5vw, 70px);
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.boton{
+    border: none;
+    border-radius: 7px;
+    font-size: clamp(14px, 1.5vw, 20px);
+    min-width: 7rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-principal);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover{
+    background-color: rgb(192, 192, 191);
+}
+
+.historial{
+    flex: 1;
+    margin: 1rem;
+    padding: 1rem;
+    border: solid 3px var(--color-cuarto);
+    border-radius: 7px;
+}
+
+.subtitulo {
+  text-align: center;
+  font-size: clamp(20px, 3vw, 40px);
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
