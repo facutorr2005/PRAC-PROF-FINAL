@@ -1,0 +1,94 @@
+:root {
+  --color-principal: rgb(231, 230, 216);
+  --color-secundario: rgb(238, 238, 9);
+  --color-terciario: rgba(0, 0, 0, 0.349);
+  --color-cuarto: black;
+  --fuente: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--fuente);
+  background-color: var(--color-principal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formulario {
+  background-color: var(--color-secundario);
+  border: solid 2px var(--color-cuarto);
+  border-radius: 7px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.eslogan {
+  font-size: 16px;
+  margin-bottom: 1.5rem;
+}
+
+#codeForm {
+  border: dashed 2px var(--color-terciario);
+  border-radius: 7px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.code-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.code-input input {
+  width: 45px;
+  height: 55px;
+  font-size: 1.8rem;
+  text-align: center;
+  border: 2px dashed var(--color-cuarto);
+  border-radius: 7px;
+  background-color: var(--color-principal);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.code-input input:focus {
+  border-color: #007bff;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  background-color: var(--color-principal);
+  font-size: 18px;
+  width: 60%;
+  height: 40px;
+  border-radius: 7px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: rgb(196, 195, 182);
+}
