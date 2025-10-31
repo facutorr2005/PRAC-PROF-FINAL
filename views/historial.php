@@ -29,7 +29,14 @@
             Historial de Compras
         </div>
         <div>
+            <?php
+            $compras = [
+            (object)["Sucursal"=>"La Reina", "Direccion"=>"San Martin 1111", "Fecha"=>"14/07/25", "Precio"=> 152379],
+            (object)["Sucursal"=>"La Gallega", "Direccion"=>"9 De Julio 832", "Fecha"=>"20/07/25", "Precio"=> 20345]
+        ]; 
+            ?>
             <?php foreach ($compras as $c): ?>
+                <div>
             <?= $c->Sucursal ?> -
             <?= $c->Direccion ?> -
             <?= $c->Fecha ?> - Total: 
@@ -37,6 +44,7 @@
             <button class="boton-foreach" onclick="location.href='<?= BASE_URL ?>/compras/consultar/<?= $c->Id ?>'">
                 Consultar
             </button>
+                </div>                              
 
             <?php endforeach; ?>
         </div>
