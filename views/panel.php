@@ -15,13 +15,12 @@
     <div class="encabezado">
         <div class="logo-titulo">
             <img class="logo" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="logo">
-        <div class="titulo">
-            Q-Pay
+            <div class="titulo">Q-Pay</div>
         </div>
         <div class="botones">
             <button onclick="location.href='compra.php'" class="boton">Iniciar Compra</button>
-            <button onclick="location.href='historial.php'"class="boton">Historial Compras</button>
-            <button onclick="location.href='perfil.php'"class="boton">Mi Perfil</button>
+            <button onclick="location.href='historial.php'" class="boton">Historial Compras</button>
+            <button onclick="location.href='perfil.php'" class="boton">Mi Perfil</button>
         </div>
     </div>
     </div>
