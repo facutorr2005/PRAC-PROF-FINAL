@@ -15,11 +15,15 @@
     <div class="info">Se le enviará un correo electrónico con un código de 6 dígitos para recuperar la contraseña.</div>
 
     <?php if (!empty($_SESSION['error'])): ?>
-      <div class="error"><?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?></div>
+    <div class="error"><?= htmlspecialchars($_SESSION['error']) ?></div>
+    <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
+
     <?php if (!empty($_SESSION['ok'])): ?>
-      <div class="ok" style="color:green;"><?= htmlspecialchars($_SESSION['ok']); unset($_SESSION['ok']); ?></div>
+  <div class="ok" style="color:green;"><?= htmlspecialchars($_SESSION['ok']) ?></div>
+    <?php unset($_SESSION['ok']); ?>
     <?php endif; ?>
+
 
     <form id="miFormulario" action="<?= url('/recuperacion') ?>" method="post" novalidate>
       <input id="correo" name="correo" type="email" placeholder="Introduzca su Correo" required>

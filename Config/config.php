@@ -1,11 +1,14 @@
 <?php
 declare(strict_types=1);
 
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
+
 // Errores (dev)
 ini_set('display_errors', '1');
 error_reporting(E_ALL);
 
-// Base del sitio (ajustá si cambiás la carpeta)
+// Base del sitio (ajustar si cambiamos la carpeta)
 define('BASE_URL', '/PRAC-PROF-FINAL/Public');
 
 function url(string $path = '/'): string {
@@ -21,7 +24,7 @@ define('APP_PATH',  dirname(__DIR__) . '/App');
 define('VIEW_PATH', APP_PATH . '/Views'); // ⇐ App/Views
 
 
-// DB (ajustá credenciales si hiciera falta)
+// DB (ajustamos credenciales si hiciera falta)
 define('DB_DSN',  'mysql:host=localhost;dbname=prac_prof_final;charset=utf8mb4');
 define('DB_USER', 'root');
 define('DB_PASS', '');

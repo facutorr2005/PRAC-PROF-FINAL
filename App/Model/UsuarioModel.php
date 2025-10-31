@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Models;
 
 use PDO;
+
+use DateTime; 
 
 class UsuarioModel
 {
@@ -13,6 +16,10 @@ class UsuarioModel
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
+
+        // Alinea la sesión MySQL con la zona de PHP (-03:00 para Argentina)
+        $offset = (new DateTime())->format('P');     
+        $this->db->exec("SET time_zone = '{$offset}'");
     }
 
     /** Devuelve usuario por email (o null si no existe) */
@@ -30,14 +37,13 @@ class UsuarioModel
     }
 
     /** Alias conveniente para el controller */
-    public function findByEmail(string $email): ?array
-    {
+    public function findByEmail(string $email): ?array{
         return $this->obtenerPorEmail($email);
     }
 
     /** ¿Existe el email? */
-    public function emailExiste(string $email): bool
-    {
+    public function emailExiste(string $email): bool{
+
         // Unificada a columna Email (antes decía Correo)
         $sql = "SELECT 1 FROM usuarios WHERE Email = ? LIMIT 1";
         $st  = $this->db->prepare($sql);
@@ -47,13 +53,14 @@ class UsuarioModel
 
     /** Crear usuario */
     public function crear(
+
         string $nombre,
         string $apellido,
         string $email,
         string $dni,
         string $fechaNac,
         string $password
-    ): int {
+        ): int {
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         // Unificada a columna Email (antes decía Correo)
@@ -66,25 +73,44 @@ class UsuarioModel
     }
 
     /** Crear/actualizar código de recuperación */
-    public function crearActualizarCodigo(int $idUsuario, string $correo, string $codigo, \DateTime $vence): void
-    {
-        // Tabla de recuperación (dejé los nombres que usaste: correo, codigo_hash, vence_el, intentos, enviado_el)
-        $ahora = (new \DateTime())->format('Y-m-d H:i:s');
+    public function crearActualizarCodigo(int $idUsuario, string $correo, string $codigo, DateTime $vence): void{
+        // Hora actual (ya en zona Argentina gracias al config)
+        $ahora = (new DateTime())->format('Y-m-d H:i:s');
 
+        file_put_contents('/tmp/qpay_debug.log', "[MODEL] venceSql=$venceSql ahora=$ahora\n", FILE_APPEND);
+
+
+        // Formateo la hora de vencimiento igual
+        $venceSql = $vence->format('Y-m-d H:i:s');
+
+        // Aseguramos que la sesión MySQL use la misma zona
+        $offset = (new DateTime())->format('P'); // ej: -03:00
+        $this->db->exec("SET time_zone = '{$offset}'");
+
+        // SQL de inserción o actualización
         $sql = "INSERT INTO recuperacion_contrasena (id_usuario, correo, codigo_hash, vence_el, intentos, enviado_el)
-                VALUES (?, ?, ?, ?, 0, ?)
-                ON DUPLICATE KEY UPDATE
-                  codigo_hash = VALUES(codigo_hash),
-                  vence_el    = VALUES(vence_el),
-                  intentos    = 0,
-                  enviado_el  = VALUES(enviado_el)";
+            VALUES (?, ?, ?, ?, 0, ?)
+            ON DUPLICATE KEY UPDATE
+            codigo_hash = VALUES(codigo_hash),
+            vence_el = VALUES(vence_el),
+            intentos = 0,
+            enviado_el = VALUES(enviado_el)";
+
+        error_log("DEBUG VENCE_EL=" . $venceSql);
+    
         $st = $this->db->prepare($sql);
-        $st->execute([$idUsuario, $correo, password_hash($codigo, PASSWORD_DEFAULT), $vence->format('Y-m-d H:i:s'), $ahora]);
+        $st->execute([
+        $idUsuario,
+        $correo,
+        password_hash($codigo, PASSWORD_DEFAULT),
+        $venceSql,
+        $ahora]);
     }
 
+
     /** Antiflood de reenvío */
-    public function puedeReenviarCodigo(string $correo, int $cooldownSegundos = 60): bool
-    {
+    public function puedeReenviarCodigo(string $correo, int $cooldownSegundos = 60): bool{
+
         $st = $this->db->prepare("SELECT enviado_el FROM recuperacion_contrasena WHERE correo = ? LIMIT 1");
         $st->execute([$correo]);
         $fila = $st->fetch();
@@ -95,8 +121,8 @@ class UsuarioModel
     }
 
     /** Obtener registro de recuperación por correo */
-    public function obtenerFilaPorCorreo(string $correo): ?array
-    {
+    public function obtenerFilaPorCorreo(string $correo): ?array{
+
         $st = $this->db->prepare("SELECT * FROM recuperacion_contrasena WHERE correo = ? LIMIT 1");
         $st->execute([$correo]);
         $fila = $st->fetch();
@@ -104,47 +130,45 @@ class UsuarioModel
     }
 
     /** +1 intento */
-    public function incrementarIntentos(int $id): void
-    {
+    public function incrementarIntentos(int $id): void{
+
         $this->db->prepare("UPDATE recuperacion_contrasena SET intentos = intentos + 1 WHERE id = ? LIMIT 1")
                  ->execute([$id]);
     }
 
     /** Eliminar registro de recuperación */
-    public function eliminarRecuperacion(int $id): void
-    {
+    public function eliminarRecuperacion(int $id): void{
+
         $this->db->prepare("DELETE FROM recuperacion_contrasena WHERE id = ? LIMIT 1")
                  ->execute([$id]);
     }
 
     /** Verificar código (hash) y vencimiento */
-    public function verificarCodigo(string $correo, string $codigo): bool
-    {
-        $st = $this->db->prepare("SELECT codigo_hash, vence_el FROM recuperacion_contrasena WHERE correo = ? LIMIT 1");
+    public function verificarCodigo(string $correo, string $codigo): bool {
+        $st = $this->db->prepare(
+        "SELECT codigo_hash FROM recuperacion_contrasena WHERE correo = ? LIMIT 1"
+        );
         $st->execute([$correo]);
         $fila = $st->fetch();
-        if (!$fila) return false;
-
-        // vencimiento
-        if (new \DateTime() > new \DateTime($fila['vence_el'])) {
-            return false;
+        if (!$fila){
+             return false;
         }
 
-        // hash del código
         return password_verify($codigo, $fila['codigo_hash']);
     }
 
+
     /** Actualizar password por ID de usuario */
-    public function updatePasswordById(int $userId, string $plain): bool
-    {
+    public function updatePasswordById(int $userId, string $plain): bool{
+
         $hash = password_hash($plain, PASSWORD_DEFAULT);
         $st = $this->db->prepare("UPDATE usuarios SET PasswordHash = ? WHERE Id = ? LIMIT 1");
         return $st->execute([$hash, $userId]);
     }
 
     /** Actualizar contraseña por correo (para el último paso si preferís por email) */
-    public function actualizarContrasena(string $correo, string $hash): void
-    {
+    public function actualizarContrasena(string $correo, string $hash): void{
+
         $this->db->prepare("UPDATE usuarios SET PasswordHash = ? WHERE Email = ? LIMIT 1")
                  ->execute([$hash, $correo]);
     }

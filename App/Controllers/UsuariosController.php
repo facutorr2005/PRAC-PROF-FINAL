@@ -4,6 +4,11 @@ namespace App\Controllers;
 use App\Models\UsuarioModel;
 use App\Core\Mailer;
 
+use DateTime;
+use DateTimeZone;
+use DateTimeImmutable;
+
+
 
 class UsuariosController{
 
@@ -164,7 +169,9 @@ class UsuariosController{
 
         // Generar código y guardar (hash + vencimiento)
         $codigo = str_pad((string)random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-        $vence  = new \DateTime('+15 minutes');
+        $vence = (new DateTime('now', new DateTimeZone(date_default_timezone_get())))
+             ->modify('+15 minutes');
+
 
         $this->model->crearActualizarCodigo((int)$usuario['Id'], $correo, $codigo, $vence);
 
@@ -195,8 +202,8 @@ class UsuariosController{
     }
 
     public function codeForm(): void {
-    // Importante: solo UNA definición de codeForm en la clase
-    $this->render('Usuarios/digitos.php');
+        // Importante: solo UNA definición de codeForm en la clase
+        $this->render('Usuarios/digitos.php');
     }
 
     public function verifyCode(): void {
@@ -210,35 +217,51 @@ class UsuariosController{
         $codigo = trim(implode('', $_POST['codigo'] ?? []));
 
         if (!$correo || strlen($codigo) !== 6) {
-        $_SESSION['error'] = 'Completá correo y código.';
-        header('Location: ' . url('/codigo')); return;
+            $_SESSION['error'] = 'Completá correo y código.';
+            header('Location: ' . url('/codigo')); return;
         }
 
         $fila = $this->model->obtenerFilaPorCorreo($correo);
+        file_put_contents('/tmp/qpay_debug.log', "[CTRL] fila_vence={$fila['vence_el']} ahora=" . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+
         if (!$fila) {
-        $_SESSION['error'] = 'Código inválido.';
-        header('Location: ' . url('/codigo')); return;
+            $_SESSION['error'] = 'Código inválido.';
+            header('Location: ' . url('/codigo')); return;
         }
 
-        // ¿Vencido?
-        if (new \DateTime() > new \DateTime($fila['vence_el'])) {
-        $_SESSION['error'] = 'Código vencido. Solicitá uno nuevo.';
-        $this->model->eliminarRecuperacion((int)$fila['id']);
-        header('Location: ' . url('/recuperacion')); return;
+
+        // --- ¿Vencido? comparación robusta con timestamps ---
+        $venceStr = isset($fila['vence_el']) ? trim((string)$fila['vence_el']) : '';
+        $venceTs  = $venceStr !== '' ? strtotime($venceStr) : false;  // espera 'YYYY-mm-dd HH:ii:ss'
+        $ahoraTs  = time();
+
+        if ($venceTs === false) {
+            // No pude interpretar la fecha -> tratar como vencido y limpiar
+            $_SESSION['error'] = 'No pude interpretar la fecha de vencimiento. Solicitá un código nuevo.';
+            $this->model->eliminarRecuperacion((int)$fila['id']);
+            header('Location: ' . url('/recuperacion')); return;
         }
+
+        if ($ahoraTs >= $venceTs) {
+            $_SESSION['error'] = 'Código vencido. Solicitá uno nuevo.';
+            $this->model->eliminarRecuperacion((int)$fila['id']);
+            header('Location: ' . url('/recuperacion')); return;
+        }
+
+
 
         // ¿Demasiados intentos?
         if ((int)$fila['intentos'] >= 5) {
-        $_SESSION['error'] = 'Demasiados intentos. Solicitá un código nuevo.';
-        $this->model->eliminarRecuperacion((int)$fila['id']);
-        header('Location: ' . url('/recuperacion')); return;
+            $_SESSION['error'] = 'Demasiados intentos. Solicitá un código nuevo.';
+            $this->model->eliminarRecuperacion((int)$fila['id']);
+            header('Location: ' . url('/recuperacion')); return;
         }
 
         // Verificar código (el modelo guardó hash)
         if (!password_verify($codigo, $fila['codigo_hash'])) {
-        $this->model->incrementarIntentos((int)$fila['id']);
-        $_SESSION['error'] = 'Código incorrecto.';
-        header('Location: ' . url('/codigo')); return;
+            $this->model->incrementarIntentos((int)$fila['id']);
+            $_SESSION['error'] = 'Código incorrecto.';
+            header('Location: ' . url('/codigo')); return;
         }
 
         // OK → habilitamos paso de reset
@@ -250,38 +273,38 @@ class UsuariosController{
 
     public function resetForm(): void {
         if (empty($_SESSION['can_reset_user_id'])) {
-        header('Location: ' . url('/recuperacion')); return;
+            header('Location: ' . url('/recuperacion')); return;
         }
         $this->render('Usuarios/editcon.php');
     }
 
     public function reset(): void {
         if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-        header('Location: ' . url('/recuperacion')); return;
+            header('Location: ' . url('/recuperacion')); return;
         }
 
         if (empty($_SESSION['can_reset_user_id'])) {
-        $_SESSION['error'] = 'Sesión inválida.';
-        header('Location: ' . url('/recuperacion')); return;
+            $_SESSION['error'] = 'Sesión inválida.';
+            header('Location: ' . url('/recuperacion')); return;
         }
 
         $p1 = trim($_POST['contrasena']  ?? '');
         $p2 = trim($_POST['repetir']     ?? '');
 
         if ($p1 === '' || $p2 === '') {
-        $_SESSION['error'] = 'Completá ambos campos.';
-        header('Location: ' . url('/reset')); return;
+            $_SESSION['error'] = 'Completá ambos campos.';
+            header('Location: ' . url('/reset')); return;
         }
         if ($p1 !== $p2) {
-        $_SESSION['error'] = 'Las contraseñas no coinciden.';
-        header('Location: ' . url('/reset')); return;
+            $_SESSION['error'] = 'Las contraseñas no coinciden.';
+            header('Location: ' . url('/reset')); return;
         }
 
         // Actualizar contraseña
         $ok = $this->model->updatePasswordById((int)$_SESSION['can_reset_user_id'], $p1);
         if (!$ok) {
-        $_SESSION['error'] = 'No se pudo actualizar la contraseña.';
-        header('Location: ' . url('/reset')); return;
+            $_SESSION['error'] = 'No se pudo actualizar la contraseña.';
+            header('Location: ' . url('/reset')); return;
         }
 
         // =========================================================
@@ -290,8 +313,8 @@ class UsuariosController{
         $fila = $this->model->obtenerFilaPorCorreo($_SESSION['can_reset_correo'] ?? null);
 
         if ($fila) {
-        $this->model->eliminarRecuperacion((int)$fila['id']);
-       }
+            $this->model->eliminarRecuperacion((int)$fila['id']);
+        }
 
         // Limpiar variables de sesión usadas en el flujo
         unset(
