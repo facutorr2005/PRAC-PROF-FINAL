@@ -20,45 +20,63 @@ body {
   flex-direction: column;
 }
 
-.encabezado{
-    background-color: var(--color-secundario);
-    min-height: 8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: solid 3px var(--color-terciario);
-    padding: 1rem 2rem;
-    flex-shrink: 0;
+/* ===== Encabezado ===== */
+.encabezado {
+  background-color: var(--color-secundario);
+  min-height: 8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 3px var(--color-terciario);
+  padding: 1rem 2rem;
+  flex-shrink: 0;
 }
 
-.titulo{
-    font-size: clamp(30px, 5vw, 70px);
-    font-weight: bold;
-    white-space: nowrap;
+/* Contenedor logo + título */
+.logo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 
-.boton{
-    border: none;
-    border-radius: 7px;
-    font-size: clamp(14px, 1.5vw, 20px);
-    min-width: 7rem;
-    padding: 0.5rem 1rem;
-    background-color: var(--color-principal);
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+/* Imagen del logo */
+.logo {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
-.boton:hover{
-    background-color: rgb(192, 192, 191);
+.titulo {
+  font-size: clamp(30px, 5vw, 70px);
+  font-weight: bold;
+  white-space: nowrap;
 }
 
-.historial{
-    flex: 1;
-    margin: 1rem;
-    padding: 1rem;
-    border: solid 3px var(--color-cuarto);
-    border-radius: 7px;
+.boton {
+  border: none;
+  border-radius: 7px;
+  font-size: clamp(14px, 1.5vw, 20px);
+  min-width: 7rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-principal);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+  background-color: rgb(192, 192, 191);
+}
+
+/* ===== Contenido principal ===== */
+.historial {
+  flex: 1;
+  margin: 1rem;
+  padding: 1rem;
+  border: solid 3px var(--color-cuarto);
+  border-radius: 7px;
 }
 
 .subtitulo {
@@ -66,4 +84,21 @@ body {
   font-size: clamp(20px, 3vw, 40px);
   font-weight: 600;
   margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .encabezado {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo {
+    height: 70px;
+    width: 70px;
+  }
+
+  .titulo {
+    font-size: clamp(24px, 6vw, 50px);
+  }
 }

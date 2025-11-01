@@ -21,7 +21,6 @@ body{
     align-items: stretch;
 }
 
-/* HEADER */
 .encabezado{
     background-color: var(--color-secundario);
     min-height: 8rem;
@@ -32,7 +31,6 @@ body{
     gap: 1rem;
 }
 
-/* logo + title a la izquierda */
 .logoTitulo{
     display: flex;
     gap: 0.5rem;
@@ -54,7 +52,6 @@ body{
     white-space: nowrap;
 }
 
-/* botones a la derecha (margin-left:auto empuja) */
 .botones{
     display: flex;
     gap: 1.5rem;
@@ -87,15 +84,14 @@ body{
     transform: scale(1.03);
 }
 
-/* CONTENEDOR PERFIL: ahora ocupa más ancho y se centra */
 .contenidoPerfil{
     width: 80%;
     max-width: 1000px;
     margin: 3.5rem auto;
     padding: 2rem;
-    background-color: var(--color-principal);
+    background-color: var(--color-secundario);
     border-radius: 10px;
-    border: 3px solid var(--color-terciario);
+    border: 3px solid var(--color-cuarto);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;

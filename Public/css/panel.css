@@ -32,7 +32,6 @@ body{
     flex-wrap: wrap; 
 }
 
-
 .logo-titulo{
     display: flex;
     align-items: center;
@@ -78,6 +77,59 @@ body{
     background-color: rgb(192, 192, 191);
 }
 
+/* ===== Menú hamburguesa ===== */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-cuarto);
+    transition: transform 0.3s ease;
+}
+
+.menu-toggle.abierto {
+    transform: rotate(90deg);
+}
+
+@media (max-width: 600px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .botones {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: var(--color-secundario);
+        border-top: 2px solid var(--color-terciario);
+        padding: 1rem 0;
+        text-align: center;
+        gap: 1rem;
+        animation: aparecer 0.3s ease forwards;
+    }
+
+    .botones.activo {
+        display: flex;
+    }
+
+    @keyframes aparecer {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .boton {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .logo {
+        height: 60px;
+        width: 60px;
+    }
+}
+
+/* ===== Contenido principal ===== */
 .contenido{
     flex: 1;
     background-color: var(--color-principal);
@@ -97,6 +149,7 @@ body{
     border-radius: 7px;
 }
 
+/* ===== Pie de página ===== */
 .pie-pagina{
     min-height: 7rem;
     background-color: var(--color-secundario);
@@ -139,6 +192,7 @@ body{
     border-right: solid 2px var(--color-terciario);
 }
 
+/* ===== Responsividad general ===== */
 @media (max-width: 1024px) {
     .encabezado {
         padding: 1rem;
@@ -219,11 +273,6 @@ body{
 @media (max-width: 600px) {
     .encabezado {
         padding: 1rem 0.5rem;
-    }
-    
-    .logo {
-        height: 60px;
-        width: 60px;
     }
     
     .contenido {
