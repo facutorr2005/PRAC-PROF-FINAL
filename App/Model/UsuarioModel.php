@@ -172,5 +172,34 @@ class UsuarioModel
         $this->db->prepare("UPDATE usuarios SET PasswordHash = ? WHERE Email = ? LIMIT 1")
                  ->execute([$hash, $correo]);
     }
+
+    public function findById(int $id): ?array {
+        $sql = "SELECT * FROM usuarios WHERE Id = :id LIMIT 1";
+        $st = $this->db->prepare($sql);
+        $st->execute([':id' => $id]);
+        $row = $st->fetch(\PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
+
+    public function eliminarPorId(int $id): bool {
+        // Si tenés tablas relacionadas (recuperaciones, etc.) y NO hay FK ON DELETE CASCADE,
+        // borrá primero los registros hijos.
+        $this->db->beginTransaction();
+        try {
+            // ejemplo si tuvieras tabla de recuperación:
+            // $this->db->prepare("DELETE FROM recuperaciones WHERE id_usuario = :id")
+            //          ->execute([':id' => $id]);
+
+            $ok = $this->db->prepare("DELETE FROM usuarios WHERE Id = :id")
+                       ->execute([':id' => $id]);
+
+            $this->db->commit();
+            return $ok;
+        } catch (\Throwable $e) {
+            $this->db->rollBack();
+            return false;
+        }
+    }
+
 }
 

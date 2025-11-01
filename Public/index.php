@@ -34,6 +34,11 @@ $router->get('/reset', [UsuariosController::class, 'resetForm']);
 $router->post('/reset', [UsuariosController::class, 'reset']);
 $router->get('/logout', [UsuariosController::class, 'logout']);
 $router->post('/logout', [UsuariosController::class, 'logout']);
+$router->get('/confirmareliminacion', [UsuariosController::class, 'confirmarEliminacion']);
+$router->post('/confirmareliminacion', [UsuariosController::class, 'confirmarEliminacion']);
+
+
+
 
 
 

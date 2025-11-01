@@ -402,8 +402,67 @@ class UsuariosController{
         exit;
     }
 
-    
+    public function confirmarEliminacion(): void{
 
+        // Debe estar logueado
+        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+        if (empty($_SESSION['user_id'])) {
+            header('Location: ' . url('/login'));
+            return;
+        }
+
+        // GET -> mostrar formulario
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+            $this->render('Usuarios/confirmareliminacion.php');
+            return;
+        }
+
+        // POST -> procesar eliminación
+        $pass1 = trim($_POST['contrasena'] ?? '');
+        $pass2 = trim($_POST['repetir'] ?? '');
+
+        if ($pass1 === '' || $pass2 === '') {
+            $_SESSION['error'] = 'Completá ambos campos.';
+            header('Location: ' . url('/confirmareliminacion'));
+            return;
+        }
+        if ($pass1 !== $pass2) {
+            $_SESSION['error'] = 'Las contraseñas no coinciden.';
+            header('Location: ' . url('/confirmareliminacion'));
+            return;
+        }
+
+        // Traer usuario actual y validar contraseña
+        $uid   = (int) $_SESSION['user_id'];
+        $user  = $this->model->findById($uid);
+
+        if (!$user || !password_verify($pass1, $user['PasswordHash'])) {
+            $_SESSION['error'] = 'Contraseña incorrecta.';
+            header('Location: ' . url('/confirmareliminacion'));
+            return;
+        }
+
+        // Borrar usuario en BD
+        $ok = $this->model->eliminarPorId($uid);
+        if (!$ok) {
+            $_SESSION['error'] = 'No pudimos eliminar tu cuenta. Intentá más tarde.';
+            header('Location: ' . url('/confirmareliminacion'));
+            return;
+        }
+
+        // Cerrar sesión de forma segura
+        $_SESSION = [];
+        if (ini_get('session.use_cookies')) {
+            $p = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000, $p['path'] ?? '/', $p['domain'] ?? '', $p['secure'] ?? false, $p['httponly'] ?? true);
+        }
+        session_destroy();
+
+        // Iniciar una sesión limpia solo para el flash
+        session_start();
+        $_SESSION['ok'] = 'Tu cuenta fue eliminada con éxito.';
+        header('Location: ' . url('/login'));
+    }
 }
 
   
