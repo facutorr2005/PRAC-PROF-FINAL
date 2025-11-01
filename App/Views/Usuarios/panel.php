@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/panel.css">
+    <link rel="stylesheet" href="<?= url('css/panel.css') ?>">
 </head>
 
 <body>
@@ -21,7 +21,8 @@
         <div class="botones">
             <button onclick="location.href='compra.php'" class="boton">Iniciar Compra</button>
             <button onclick="location.href='historial.php'"class="boton">Historial Compras</button>
-            <button onclick="location.href='perfil.php'"class="boton">Mi Perfil</button>
+            <button onclick="location.href='<?= url('/perfil') ?>'" class="boton">Mi Perfil</button>
+
         </div>
     </div>
     </div>
@@ -59,5 +60,7 @@
             <div class="info-pie"><a class="enlace-pie" href="https://www.instagram.com/">📷 Instagram</a></div>
         </div>
     </div>
+    <a href="<?= url('/logout') ?>">Cerrar sesión</a>
+
 </body>
 </html>

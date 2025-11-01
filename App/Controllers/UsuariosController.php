@@ -41,6 +41,11 @@ class UsuariosController{
     // GET /login
     public function loginForm(): void{
 
+        if (!empty($_SESSION['user_id'])) {
+            header('Location: ' . url('/panel'));
+        return;
+        }
+
         $this->render('Usuarios/login.php');
     }
 
@@ -207,8 +212,8 @@ class UsuariosController{
     }
 
     public function verifyCode(): void {
-    if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-        header('Location: ' . url('/codigo')); return;
+        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+            header('Location: ' . url('/codigo')); return;
         }
 
         // El correo lo tomamos de la sesión (lo guardamos en forgot())
@@ -318,14 +323,87 @@ class UsuariosController{
 
         // Limpiar variables de sesión usadas en el flujo
         unset(
-        $_SESSION['can_reset_user_id'],
-        $_SESSION['can_reset_correo'],
-        $_SESSION['correo_recuperacion']
+            $_SESSION['can_reset_user_id'],
+            $_SESSION['can_reset_correo'],
+            $_SESSION['correo_recuperacion']
         );
 
         // Mensaje final y redirección al login
         $_SESSION['ok'] = 'Contraseña actualizada. Iniciá sesión.';
         header('Location: ' . url('/login'));
+    }
 
-    }       
+        // GET /panel  -> solo si está logueado
+        public function panel(): void {
+            if (empty($_SESSION['user_id'])) {
+            $_SESSION['error'] = 'Inicia sesión para continuar.';
+            header('Location: ' . url('/login'));
+            return;
+            }
+
+            // Podés pasar datos a la vista si querés
+            $this->render('Usuarios/panel.php', [
+                'nombre' => $_SESSION['user_name'] ?? '',
+                'email'  => $_SESSION['user_email'] ?? '',
+            ]);
+        }
+        
+        public function perfil(): void{
+            if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+            // Si no hay usuario logueado, redirige al login
+            if (empty($_SESSION['user_id'])) {
+                header('Location: ' . url('/login'));
+                return;
+            }
+
+            // Obtener datos del usuario desde el modelo
+            $user = $this->model->obtenerPorEmail($_SESSION['user_email']);
+
+            // Renderizar la vista perfil con los datos del usuario
+            $this->render('Usuarios/perfil.php', ['user' => $user]);
+        }
+
+
+        // ========================
+        // LOGOUT DEL USUARIO
+        // ========================
+        public function logout(): void{
+
+        // Aceptar GET o POST (según cómo lo invoques desde el panel)
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        // Vaciar todas las variables de sesión
+        $_SESSION = [];
+
+        // Eliminar la cookie de sesión si existe
+        if (ini_get('session.use_cookies')) {
+            $p = session_get_cookie_params();
+            // En algunos PHP 'domain' puede ser null; usamos null coalesce
+            setcookie(
+                session_name(), '', time() - 42000,
+                $p['path'] ?? '/',
+                $p['domain'] ?? '',
+                $p['secure'] ?? false,
+                $p['httponly'] ?? true
+            );
+        }
+
+        // Destruir la sesión
+        session_destroy();
+
+        // Mensaje flash opcional (nuevo id de sesión limpio)
+        session_start();
+        $_SESSION['ok'] = 'Sesión cerrada correctamente.';
+
+        // Redirigir al login
+        header('Location: ' . url('/login'));
+        exit;
+    }
+
+    
+
 }
+
+  

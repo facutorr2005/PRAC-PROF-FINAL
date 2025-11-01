@@ -22,6 +22,7 @@ $router->get('/',       [UsuariosController::class, 'loginForm']);
 $router->get('/login',  [UsuariosController::class, 'loginForm']);
 $router->post('/login', [UsuariosController::class, 'login']);
 $router->get('/panel',  [UsuariosController::class, 'panel']);
+$router->get('/perfil', [UsuariosController::class, 'perfil']);
 $router->get('/registro', [UsuariosController::class, 'registerForm']);
 $router->post('/registro', [UsuariosController::class, 'register']);
 $router->get('/recuperacion',  [UsuariosController::class, 'forgotForm']);
@@ -31,6 +32,10 @@ $router->get('/codigo', [UsuariosController::class, 'codeForm']);
 $router->post('/codigo', [UsuariosController::class, 'verifyCode']);
 $router->get('/reset', [UsuariosController::class, 'resetForm']);
 $router->post('/reset', [UsuariosController::class, 'reset']);
+$router->get('/logout', [UsuariosController::class, 'logout']);
+$router->post('/logout', [UsuariosController::class, 'logout']);
+
+
 
 
 

@@ -17,38 +17,43 @@
   <div class="titulo">Recuperación de Contraseña</div>
   <div class="eslogan">Ingrese su nueva contraseña y repítala para confirmar</div>
     <div class="error" id="error-msg"></div>
-    <form id="miFormulario">
-      <input id="contrasena" type="password" placeholder="Nueva Contraseña">
-      <input id="repetir" type="password" placeholder="Repetir Contraseña">
+    <form id="miFormulario" action="<?= url('/reset') ?>" method="post" novalidate>
+      <input id="contrasena" name="contrasena" type="password" placeholder="Nueva Contraseña">
+      <input id="repetir" name="repetir" type="password" placeholder="Repetir Contraseña">
       <button type="submit">Guardar Contraseña</button>
     </form>
   </div>
 
-  <script>  
-    document.getElementById("miFormulario").addEventListener("submit",function(e){
-      const primerclave = document.getElementById("contrasena").value.trim();
-      const segundaclave = document.getElementById("repetir").value.trim();
-      const errorDiv = document.getElementById("error-msg");
+<script>
+    const form = document.getElementById('miFormulario');
+    form.addEventListener('submit', function (e) {
+    const p1 = document.getElementById('contrasena').value.trim();
+    const p2 = document.getElementById('repetir').value.trim();
+    const errorDiv = document.getElementById('error-msg');
 
-      errorDiv.textContent = "";
+    errorDiv.textContent = '';
+    errorDiv.style.display = 'block';
 
-      if(primerclave === "" || segundaclave === ""){
-        e.preventDefault();
-        errorDiv.textContent = "⚠️ Todos los campos son obligatorios"
-        errorDiv.style.color = "red";
+    // Si hay error, BLOQUEAMOS con preventDefault()
+    if (!p1 || !p2) {
+      e.preventDefault();
+      errorDiv.textContent = '⚠️ Todos los campos son obligatorios.';
+      errorDiv.style.color = 'red';
+      return;
+    }
 
-        return;
-      }
+    if (p1 !== p2) {
+      e.preventDefault();
+      errorDiv.textContent = 'Las contraseñas no coinciden. Intente nuevamente.';
+      errorDiv.style.color = 'red';
+      return;
+    }
 
-      if(primerclave !== segundaclave){
-        e.preventDefault();
-        errorDiv.textContent = "Las contraseñas no coinciden. Intente Nuevamente.";
-        errorDiv.style.color = "red";
+    // Si está TODO OK: NO llamamos a preventDefault()
+    // => el form se envía normalmente por POST a /reset
+  });
 
-        return;
-
-      }
-    })
+    
 
   </script>
 
