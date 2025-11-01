@@ -34,7 +34,7 @@
         e.preventDefault();
         errorDiv.textContent = "⚠️ Todos los campos son obligatorios"
         errorDiv.style.color = "red";
-        return
+        return;
       }
 
       if (primerclave !== segundaclave) {
