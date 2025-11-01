@@ -9,14 +9,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/editcon.css">
+  <link rel="stylesheet" href="<?= url('css/editcon.css') ?>">
 </head>
 <body>
 
 <div class="contenido">
   <div class="titulo">Recuperación de Contraseña</div>
   <div class="eslogan">Ingrese su nueva contraseña y repítala para confirmar</div>
-
+    <div class="error" id="error-msg"></div>
     <form id="miFormulario">
       <input id="contrasena" type="password" placeholder="Nueva Contraseña">
       <input id="repetir" type="password" placeholder="Repetir Contraseña">
@@ -24,27 +24,32 @@
     </form>
   </div>
 
-  <script>
-    document.getElementById("miFormulario").addEventListener("submit", function(e) {
-      e.preventDefault();
+  <script>  
+    document.getElementById("miFormulario").addEventListener("submit",function(e){
+      const primerclave = document.getElementById("contrasena").value.trim();
+      const segundaclave = document.getElementById("repetir").value.trim();
+      const errorDiv = document.getElementById("error-msg");
 
-      const pass1 = document.getElementById("contrasena").value.trim();
-      const pass2 = document.getElementById("repetir").value.trim();
+      errorDiv.textContent = "";
 
-      if (pass1 === "" || pass2 === "") {
-        alert("Por favor, complete ambos campos.");
+      if(primerclave === "" || segundaclave === ""){
+        e.preventDefault();
+        errorDiv.textContent = "⚠️ Todos los campos son obligatorios"
+        errorDiv.style.color = "red";
+
         return;
       }
 
-      if (pass1 !== pass2) {
-        alert("Las contraseñas no coinciden. Intente nuevamente.");
-        return;
-      }
+      if(primerclave !== segundaclave){
+        e.preventDefault();
+        errorDiv.textContent = "Las contraseñas no coinciden. Intente Nuevamente.";
+        errorDiv.style.color = "red";
 
-      alert("Contraseña actualizada correctamente.");
-      // Aquí podrías redirigir o enviar al servidor con fetch()
-      // Ejemplo: window.location.href = "login.html";
-    });
+        return;
+
+      }
+    })
+
   </script>
 
 </body>
