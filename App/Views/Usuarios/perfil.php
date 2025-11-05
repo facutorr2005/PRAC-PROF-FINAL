@@ -20,8 +20,10 @@
         </div>
 
         <div class="botones">
-            <button onclick="location.href='panel.php'" class="boton">Volver al inicio</button>
+            <button onclick="location.href='<?= url('/panel') ?>'" class="boton">Volver al inicio</button>
             <button onclick="location.href='<?= url('/confirmareliminacion') ?>'" class="boton eliminarBoton">Eliminar cuenta</button>
+        </div>
+
         </div>
     </div>
 
