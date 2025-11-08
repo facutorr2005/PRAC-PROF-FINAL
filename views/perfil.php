@@ -14,7 +14,7 @@
 <body>
     <div class="encabezado">
         <div class="logoTitulo">
-            <img class="logo" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="logo">
+            <img class="logo" src="../Public/imagenes/logo.png" alt="logo">
             <div class="titulo">Q-Pay</div>
         </div>
 

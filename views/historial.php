@@ -15,7 +15,7 @@
     <div class="encabezado">
 
         <div class="logo-titulo">
-            <img class="logo" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="logo">
+            <img class="logo" src="../Public/imagenes/logo.png" alt="logo">
             <div class="titulo">
                 Q-Pay
             </div>
@@ -39,7 +39,7 @@
             ]; 
             ?>
             <?php foreach ($compras as $c): ?>
-                <div>
+                <div class= "compra" >
                     <?= $c->Sucursal ?> -
                     <?= $c->Direccion ?> -
                     <?= $c->Fecha ?> - Total: 

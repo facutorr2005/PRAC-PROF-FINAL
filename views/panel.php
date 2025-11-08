@@ -14,7 +14,7 @@
 <body>
     <div class="encabezado">
         <div class="logo-titulo">
-            <img class="logo" src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="logo">
+            <img class="logo" src="../Public/imagenes/logo.png" alt="logo">
             <div class="titulo">Q-Pay</div>
         </div>
 
@@ -27,16 +27,17 @@
             <button onclick="location.href='compra.php'" class="boton">Iniciar Compra</button>
             <button onclick="location.href='historial.php'" class="boton">Historial Compras</button>
             <button onclick="location.href='perfil.php'" class="boton">Mi Perfil</button>
+            <button onclick="location.href='../App/Controllers/noseController.php'" class="boton">Cerrar Sesión</button>
         </div>
     </div>
 
     <div class="contenido">
-        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="oferta-1" class="oferta oferta-1">
-        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="oferta-2" class="oferta oferta-2">
-        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="oferta-3" class="oferta oferta-3">
-        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="oferta-4" class="oferta oferta-4">
-        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="oferta-5" class="oferta oferta-5">
-        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6" alt="oferta-6" class="oferta oferta-6">
+        <img src="../Public/imagenes/promo-1.png" alt="oferta-1" class="oferta oferta-1">
+        <img src="../Public/imagenes/promo-2.png" alt="oferta-2" class="oferta oferta-2">
+        <img src="../Public/imagenes/promo-3.png" alt="oferta-3" class="oferta oferta-3">
+        <img src="../Public/imagenes/promo-4.png" alt="oferta-4" class="oferta oferta-4">
+        <img src="../Public/imagenes/promo-5.png" alt="oferta-5" class="oferta oferta-5">
+        <img src="../Public/imagenes/promo-6.png" alt="oferta-6" class="oferta oferta-6">
     </div>
 
     <div class="pie-pagina">
