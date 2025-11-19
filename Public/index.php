@@ -9,11 +9,14 @@ require_once __DIR__ . '/../Config/config.php';
 require_once __DIR__ . '/../App/Core/router.php';
 require_once __DIR__ . '/../App/Controllers/UsuariosController.php';
 require_once __DIR__ . '/../App/Model/UsuarioModel.php'; // si tu carpeta es "Model" (singular)
-
+require_once __DIR__ . '/../App/Controllers/ComprasController.php';
+require_once __DIR__ . '/../App/Model/ProductoModel.php';
+require_once __DIR__ . '/../App/Model/CompraModel.php';
 
 
 use App\Core\Router;
 use App\Controllers\UsuariosController;
+use App\Controllers\ComprasController;
 
 $router = new Router();
 
@@ -36,6 +39,17 @@ $router->get('/logout', [UsuariosController::class, 'logout']);
 $router->post('/logout', [UsuariosController::class, 'logout']);
 $router->get('/confirmareliminacion', [UsuariosController::class, 'confirmarEliminacion']);
 $router->post('/confirmareliminacion', [UsuariosController::class, 'confirmarEliminacion']);
+
+
+// Rutas de compras
+
+$router->get('/compra', [ComprasController::class, 'compraForm']);
+$router->get('/historial', [ComprasController::class, 'historial']);
+// API para buscar producto por EAN (AJAX desde JS)
+$router->get('/api/producto', [ComprasController::class, 'apiBuscarProducto']);
+// API para guardar compra (AJAX desde JS)
+$router->post('/api/compra', [ComprasController::class, 'apiGuardarCompra']);
+
 
 
 

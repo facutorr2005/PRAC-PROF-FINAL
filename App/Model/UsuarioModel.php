@@ -6,12 +6,11 @@ use PDO;
 
 use DateTime; 
 
-class UsuarioModel
-{
+class UsuarioModel{
     private PDO $db;
 
-    public function __construct()
-    {
+    public function __construct(){
+
         $this->db = new PDO(DB_DSN, DB_USER, DB_PASS, [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -23,8 +22,7 @@ class UsuarioModel
     }
 
     /** Devuelve usuario por email (o null si no existe) */
-    public function obtenerPorEmail(string $email): ?array
-    {
+    public function obtenerPorEmail(string $email): ?array{
         // Unificada a columna Email
         $sql = "SELECT Id, Nombre, Apellido, Email, PasswordHash
                 FROM usuarios

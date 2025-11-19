@@ -19,8 +19,8 @@
             Q-Pay
         </div>
         <div class="botones">
-            <button onclick="location.href='compra.php'" class="boton">Iniciar Compra</button>
-            <button onclick="location.href='historial.php'"class="boton">Historial Compras</button>
+            <button onclick="location.href='<?= url('/compra') ?>'" class="boton">Iniciar Compra</button>
+            <button onclick="location.href='<?= url('/historial') ?>'"class="boton">Historial Compras</button>
             <button onclick="location.href='<?= url('/perfil') ?>'" class="boton">Mi Perfil</button>
 
         </div>
