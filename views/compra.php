@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compra</title>
     <link rel="stylesheet" href="../Public/css/compra.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 </head>
 <body>
     <div class="encabezado">
@@ -17,6 +18,11 @@
     </div>
 
     <div id="errorDiv" class="error-mensaje"></div>
+
+    <div id="scanner-container" style="display: none;">
+        <div id="reader"></div>
+        <button id="close-scanner-btn" class="boton-accion">Cerrar</button>
+    </div>
 
     <main class="carrito-contenedor">
         <h2>Carrito de Compras</h2>
@@ -63,8 +69,37 @@
             window.location.href="http://localhost/FINAL-PRACTICA-PROFECIONALIZANTE/views/panel.php"
         });
 
-        document.getElementById('scanBtn').addEventListener('click', async () => {
-            const ean = prompt("Ingrese código EAN del producto:");
+        const scannerContainer = document.getElementById('scanner-container');
+        const closeScannerBtn = document.getElementById('close-scanner-btn');
+        const html5QrCode = new Html5Qrcode("reader");
+
+        document.getElementById('scanBtn').addEventListener('click', () => {
+            scannerContainer.style.display = 'block';
+            html5QrCode.start(
+                { facingMode: "environment" },
+                {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 }
+                },
+                async (decodedText, decodedResult) => {
+                    await html5QrCode.stop();
+                    scannerContainer.style.display = 'none';
+                    buscarProducto(decodedText);
+                },
+                (errorMessage) => {
+                    // console.log(errorMessage);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+
+        closeScannerBtn.addEventListener('click', async () => {
+            await html5QrCode.stop();
+            scannerContainer.style.display = 'none';
+        });
+
+        async function buscarProducto(ean) {
             if (!ean) return;
 
             try {
@@ -87,7 +122,7 @@
             } catch (err) {
                 mostrarError("Error al conectar con la base de datos.");
             }
-        });
+        }
 
         function actualizarCarrito() {
             carritoDiv.innerHTML = '';

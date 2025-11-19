@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,47 +9,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../Public/css/historial.css">
 </head>
-
 <body>
     <div class="encabezado">
-
         <div class="logo-titulo">
             <img class="logo" src="../Public/imagenes/logo.png" alt="logo">
-            <div class="titulo">
-                Q-Pay
-            </div>
+            <div class="titulo">Q-Pay</div>
         </div>
-
-        <button class="boton" onclick="location.href='panel.php'">
-            Volver al inicio
-        </button>
-
+        <div class="boton-derecha">
+            <button class="boton" onclick="location.href='panel.php'">Volver al inicio</button>
+        </div>
     </div>
 
     <div class="historial">
-        <div class="subtitulo">
-            Historial de Compras
-        </div>
-        <div>
+        <div class="subtitulo">Historial de Compras</div>
+        <div class="lista-compras">
             <?php
             $compras = [
-                (object)["Sucursal"=>"La Reina", "Direccion"=>"San Martin 1111", "Fecha"=>"14/07/25", "Precio"=>152379],
-                (object)["Sucursal"=>"La Gallega", "Direccion"=>"9 De Julio 832", "Fecha"=>"20/07/25", "Precio"=>20345]
-            ]; 
+                (object)["Id"=>1, "Sucursal"=>"La Reina", "Direccion"=>"San Martin 1111", "Fecha"=>"14/07/25", "Precio"=>152379],
+                (object)["Id"=>2, "Sucursal"=>"La Gallega", "Direccion"=>"9 De Julio 832", "Fecha"=>"20/07/25", "Precio"=>20345]
+            ];
             ?>
             <?php foreach ($compras as $c): ?>
-                <div class= "compra" >
-                    <?= $c->Sucursal ?> -
-                    <?= $c->Direccion ?> -
-                    <?= $c->Fecha ?> - Total: 
-                    <?= $c->Precio ?>
-                    <button class="boton-foreach" onclick="location.href='<?= BASE_URL ?>/compras/consultar/<?= $c->Id ?>'">
-                        Consultar
-                    </button>
-                </div>                              
+                <div class="compra">
+                    <div class="compra-texto">
+                        <?= $c->Sucursal ?> - <?= $c->Direccion ?> - <?= $c->Fecha ?> - Total: $<?= number_format($c->Precio, 0, ',', '.') ?>
+                    </div>
+                    <button class="boton-foreach" onclick="location.href='<?= BASE_URL ?>/compras/consultar/<?= $c->Id ?>'">Consultar</button>
+                </div>
             <?php endforeach; ?>
         </div>
     </div>
 </body>
-
 </html>
