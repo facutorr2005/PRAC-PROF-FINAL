@@ -22,6 +22,8 @@
             <button onclick="location.href='<?= url('/compra') ?>'" class="boton">Iniciar Compra</button>
             <button onclick="location.href='<?= url('/historial') ?>'"class="boton">Historial Compras</button>
             <button onclick="location.href='<?= url('/perfil') ?>'" class="boton">Mi Perfil</button>
+            <button onclick="location.href='<?= url('/logout') ?>'" class="boton">Cerrar sesión</button>
+            
 
         </div>
     </div>
@@ -60,7 +62,7 @@
             <div class="info-pie"><a class="enlace-pie" href="https://www.instagram.com/">📷 Instagram</a></div>
         </div>
     </div>
-    <a href="<?= url('/logout') ?>">Cerrar sesión</a>
+    
 
 </body>
 </html>
