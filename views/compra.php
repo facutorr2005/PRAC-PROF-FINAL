@@ -37,7 +37,6 @@
         </div>
     </div>
 
-    <!-- Confirmación de cancelación -->
     <div id="confirmacion" class="modal">
         <div class="modal-contenido">
             <p>Se borrará el carrito de compras</p>
@@ -66,7 +65,7 @@
         });
 
         confirmarCancelar.addEventListener('click', () => {
-            window.location.href="http://localhost/FINAL-PRACTICA-PROFECIONALIZANTE/views/panel.php"
+            window.location.href="http://localhost/PRAC-PROF-FINAL/views/panel.php"
         });
 
         const scannerContainer = document.getElementById('scanner-container');
@@ -86,12 +85,9 @@
                     scannerContainer.style.display = 'none';
                     buscarProducto(decodedText);
                 },
-                (errorMessage) => {
-                    // console.log(errorMessage);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                (errorMessage) => {}
+            )
+            .catch((err) => console.log(err));
         });
 
         closeScannerBtn.addEventListener('click', async () => {
@@ -119,7 +115,7 @@
                 }
 
                 actualizarCarrito();
-            } catch (err) {
+            } catch {
                 mostrarError("Error al conectar con la base de datos.");
             }
         }
@@ -135,18 +131,26 @@
                 item.classList.add('item');
 
                 item.innerHTML = `
-                    <img src="${p.imagen}" class="img-prod">
-                    <div class="info-prod">
-                        <h3>${p.nombre}</h3>
-                        <p>$${p.precio.toFixed(2)} c/u</p>
+                    <div class="item-izq">
+                        <img src="${p.imagen}" class="img-prod">
+                        
+                        <div class="info-prod">
+                            <h3>${p.nombre}</h3>
+                            <p>$${p.precio.toFixed(2)} c/u</p>
+                        </div>
                     </div>
-                    <div class="cantidad">
-                        <button onclick="cambiarCantidad(${i}, -1)">-</button>
-                        <span>${p.cantidad}</span>
-                        <button onclick="cambiarCantidad(${i}, 1)">+</button>
+
+                    <div class="item-der">
+                        <div class="cantidad">
+                            <button onclick="cambiarCantidad(${i}, -1)">-</button>
+                            <span>${p.cantidad}</span>
+                            <button onclick="cambiarCantidad(${i}, 1)">+</button>
+                        </div>
+
+                        <button onclick="eliminar(${i})" class="eliminar red-box">🗑</button>
                     </div>
-                    <button onclick="eliminar(${i})" class="eliminar">🗑</button>
                 `;
+
                 carritoDiv.appendChild(item);
             });
 
@@ -186,7 +190,6 @@
 
                 if (data.success) {
                     alert("Compra finalizada correctamente. Generando QR...");
-                    // Aquí se podría redirigir a una vista con el QR.
                 } else {
                     mostrarError("Error al guardar la compra.");
                 }
