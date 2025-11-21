@@ -43,8 +43,8 @@ class ProductoModel{
             'ean'    => $row['CodigoEAN'],
             'nombre' => $row['Nombre'],
             'precio' => (float)$row['PrecioVenta'],
-            // si tus imágenes están en /Public, podés ajustar esto:
-            'imagen' => '/' . ltrim($row['Imagen'], '/'),
+            'imagen' => url('imagenes/productos/' . $row['Imagen']),
+
         ];
     }
 }

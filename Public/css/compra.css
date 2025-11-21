@@ -96,14 +96,16 @@ body {
 .cantidad {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.3rem;
 }
 
 .cantidad button {
   border: none;
   border-radius: 7px;
   font-size: clamp(14px, 1.5vw, 20px);
-  padding: 0.4rem 0.8rem;
+  height: 38px;
+  width: 38px;
+  padding: 0;
   background-color: var(--color-principal);
   font-weight: bold;
   cursor: pointer;
@@ -114,11 +116,29 @@ body {
   background-color: rgb(192, 192, 191);
 }
 
+/* ==== NUEVO: el número con la misma altura de los botones ==== */
+.cantidad span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 38px;
+  background-color: white;
+  border: 2px solid var(--color-terciario);
+  border-radius: 7px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* ==== Tacho ==== */
 .eliminar {
-  background: transparent;
+  background: rgb(230, 60, 60);
+  color: white;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  font-size: 1.1rem;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
 }
 
 .footer-fijo {
@@ -188,9 +208,9 @@ body {
 
 .item-der {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.7rem;
 }
 
 .red-box {
@@ -208,8 +228,11 @@ body {
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 600px) {
+
+  /* Evita cambios raros */
   .item {
     flex-direction: row;
+    align-items: center;
     padding: 0.8rem;
   }
 
@@ -219,11 +242,34 @@ body {
 
   .item-der {
     flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
   }
 
+  /* Mantener tamaño EXACTO de los botones */
   .cantidad button {
-    min-width: 2.2rem;
-    padding: 0.3rem;
+    height: 38px;
+    width: 38px;
+    font-size: 1.1rem;
+    padding: 0;
+  }
+
+  /* También el span del número */
+  .cantidad span {
+    height: 38px;
+    width: 38px;
+    font-size: 1.1rem;
+  }
+
+  /* Tacho alineado */
+  .eliminar {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.6rem;
   }
 }
 
@@ -231,9 +277,30 @@ body {
   .item {
     padding: 0.6rem;
   }
+
+  /* Todos mantienen mismo tamaño */
+  .cantidad button,
+  .cantidad span {
+    height: 36px;
+    width: 36px;
+    font-size: 1rem;
+  }
+
+  .eliminar {
+    height: 38px;
+  }
 }
 
+
 @media (max-width: 320px) {
-  .titulo { font-size: 1.4rem; }
-  .boton-accion { font-size: 0.8rem; }
+  .cantidad button,
+  .cantidad span {
+    height: 32px;
+    width: 32px;
+    font-size: 0.9rem;
+  }
+
+  .eliminar {
+    height: 34px;
+  }
 }

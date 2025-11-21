@@ -1,3 +1,8 @@
+<?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,73 +14,108 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="<?= url('css/digitos.css') ?>">
 
+  <!-- Tu helper -->
+  <link rel="stylesheet" href="<?= url('css/digitos.css') ?>">
 </head>
 
 <body>
 
   <div class="formulario">
-    <h1 class="titulo">Recuperación de Contraseña</h1>
-    <p class="eslogan">Revise su email e introduzca el código</p>
 
-    <form id="codeForm" action="<?= url('/codigo') ?>" method="post">
+    <div class="titulo">Recuperación de Contraseña</div>
+    <div class="eslogan">Revise su email e introduzca el código, tiene 10 minutos.</div>
+
+    <!-- Mensaje del servidor -->
+    <?php if (!empty($_SESSION['error'])): ?>
+      <div class="error"><?= htmlspecialchars($_SESSION['error']) ?></div>
+      <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($_SESSION['ok'])): ?>
+      <div class="ok" style="color:green;"><?= htmlspecialchars($_SESSION['ok']) ?></div>
+      <?php unset($_SESSION['ok']); ?>
+    <?php endif; ?>
+
+    <div class="error" id="front-error"></div>
+
+    <form id="codeForm" action="<?= url('/codigo') ?>" method="POST">
       <div class="code-input">
-        <input name= "codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input name= "codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input name= "codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input name= "codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input name= "codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
-        <input name= "codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input name="codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input name="codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input name="codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input name="codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input name="codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
+        <input name="codigo[]" type="text" maxlength="1" pattern="\d*" inputmode="numeric">
       </div>
+
+      <div class="temporizador" id="temporizador">10:00</div>
+
       <button type="submit">Enviar Código</button>
     </form>
   </div>
 
-  <script>
-    const inputs = document.querySelectorAll('.code-input input');
-    const form   = document.getElementById('codeForm');
+<script>
+  const inputs = document.querySelectorAll('.code-input input');
+  const form   = document.getElementById('codeForm');
+  const errorDiv = document.getElementById('front-error');
 
-      // Auto-avance entre los 6 inputs
-      inputs.forEach((input, i) => {
-      input.addEventListener('input', (e) => {
-        // permitir solo números y 1 dígito
-        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 1);
-        if (e.target.value && i < inputs.length - 1) {
-          inputs[i + 1].focus();
-        }
-      });
+  // Auto avance / retroceso
+  inputs.forEach((input, index) => {
 
-      // Retroceso con Backspace
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !input.value && i > 0) {
-          inputs[i - 1].focus();
-        }
-      });
-    });
-
-    // Permitir pegar los 6 dígitos de una sola vez
-    inputs[0].addEventListener('paste', (e) => {
-      const text = (e.clipboardData || window.clipboardData)
-        .getData('text')
-        .replace(/\D/g, '')
-        .slice(0, 6);
-      if (!text) return;
-      e.preventDefault();
-      [...text].forEach((ch, i) => { if (inputs[i]) inputs[i].value = ch; });
-      if (text.length === 6) form.requestSubmit();
-    });
-
-    // Validación al enviar
-    form.addEventListener('submit', (e) => {
-      const vacio = [...inputs].some(inp => inp.value === '');
-      if (vacio) {
-        e.preventDefault();
-        alert('Por favor, completá los 6 dígitos antes de continuar.');
+    input.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0, 1);
+      if (e.target.value && index < inputs.length - 1) {
+        inputs[index + 1].focus();
       }
     });
-</script>
 
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !input.value && index > 0) {
+        inputs[index - 1].focus();
+      }
+    });
+  });
+
+  // Permitir pegar los 6 dígitos
+  inputs[0].addEventListener('paste', (e) => {
+    const text = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+    if (!text) return;
+
+    e.preventDefault();
+    [...text].forEach((char, i) => inputs[i].value = char);
+
+    if (text.length === 6) form.requestSubmit();
+  });
+
+  // Validación antes de enviar
+  form.addEventListener('submit', (e) => {
+    const vacio = [...inputs].some(inp => inp.value === '');
+    if (vacio) {
+      e.preventDefault();
+      errorDiv.textContent = "Por favor, complete los 6 dígitos.";
+    }
+  });
+
+  // Temporizador 10 minutos
+  let tiempo = 10 * 60;
+  const temporizador = document.getElementById('temporizador');
+
+  const interval = setInterval(() => {
+    const min = Math.floor(tiempo / 60);
+    const seg = tiempo % 60;
+
+    temporizador.textContent =
+      `${min.toString().padStart(2,'0')}:${seg.toString().padStart(2,'0')}`;
+
+    tiempo--;
+
+    if (tiempo < 0) {
+      clearInterval(interval);
+      window.location.href = "<?= url('/recuperacion') ?>";
+    }
+  }, 1000);
+</script>
 
 </body>
 
