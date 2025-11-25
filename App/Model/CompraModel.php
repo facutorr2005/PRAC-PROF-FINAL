@@ -35,7 +35,7 @@ class CompraModel
 
             // Inserto la transacción, asociándola al usuario.
             // NOTA: Se asume que la tabla `transacciones` tiene una columna `id_usuario`.
-            $sqlTx = "INSERT INTO transacciones (id_usuario, Momento) VALUES (?, NOW())";
+            $sqlTx = "INSERT INTO transaccion (usuario_id, Momento) VALUES (?, NOW())";
             $stTx = $this->db->prepare($sqlTx);
             $stTx->execute([$id_usuario]);
             $idTransaccion = (int)$this->db->lastInsertId();
