@@ -1,0 +1,49 @@
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.detalle-container {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.lista-productos {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.producto {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.producto-info {
+    font-size: 1.1em;
+}
+
+.producto-cantidad,
+.producto-precio {
+    font-weight: bold;
+}
+
+.total {
+    text-align: right;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #555;
+}

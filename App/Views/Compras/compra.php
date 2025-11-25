@@ -233,8 +233,8 @@
                 const data = await respuesta.json();
 
                 if (data.success) {
-                    alert("Compra finalizada correctamente. Generando QR...");
-                    // Futuro: redirección a una vista de QR
+                    // Redirigir a la vista del QR con el ID de la transacción
+                    window.location.href = `<?= url('/compras/qr/') ?>${data.id_transaccion}`;
                 } else {
                     mostrarError("Error al guardar la compra.");
                 }
