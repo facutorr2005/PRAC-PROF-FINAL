@@ -50,15 +50,9 @@ $router->get('/api/producto', [ComprasController::class, 'apiBuscarProducto']);
 // API para guardar compra (AJAX desde JS)
 $router->post('/api/compra', [ComprasController::class, 'apiGuardarCompra']);
 
-
-
-
-
-
-
-
-
-
+// Nuevas rutas para QR y detalle
+$router->get('/compras/qr/{id}', [ComprasController::class, 'qr']);
+$router->get('/compras/detalle/{id}', [ComprasController::class, 'detalle']);
 // Normalizar path: quitar BASE_URL del REQUEST_URI
 $uriFull = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $base    = rtrim(BASE_URL, '/'); // /PRAC-PROF-FINAL/Public

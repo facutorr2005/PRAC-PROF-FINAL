@@ -121,12 +121,78 @@ class ComprasController{
             ];
         }
 
+        // --- INICIO PARCHE DE SEGURIDAD ---
+        if (empty($_SESSION['user_id'])) {
+            http_response_code(403); // Forbidden
+            echo json_encode(['success' => false, 'error' => 'Usuario no autenticado']);
+            return;
+        }
+        $id_usuario = (int)$_SESSION['user_id'];
+        // --- FIN PARCHE DE SEGURIDAD ---
+
         try {
-            $id = $this->compras->registrarCompra($normalizados);
+            $id = $this->compras->registrarCompra($normalizados, $id_usuario);
             echo json_encode(['success' => true, 'id_transaccion' => $id]);
         } catch (\Throwable $e) {
             // En prod: loggear, no mostrar detalle
             echo json_encode(['success' => false, 'error' => 'No se pudo guardar la compra']);
         }
+    }
+
+    // ==========================
+    //  GET /compras/qr/{id} → muestra el QR de una compra
+    // ==========================
+    public function qr(int $id): void
+    {
+        if (empty($_SESSION['user_id'])) {
+            $_SESSION['error'] = 'Inicia sesión para ver tus compras.';
+            header('Location: ' . url('/login'));
+            return;
+        }
+
+        // --- INICIO PARCHE DE SEGURIDAD ---
+        $id_usuario = (int)$_SESSION['user_id'];
+        $compra = $this->compras->obtenerPorId($id, $id_usuario);
+
+        if (!$compra) {
+            http_response_code(404);
+            echo "Compra no encontrada o no te pertenece.";
+            return;
+        }
+        // --- FIN PARCHE DE SEGURIDAD ---
+
+        $this->render('Compras/qr.php', ['id_transaccion' => $id]);
+    }
+
+    // ==========================
+    //  GET /compras/detalle/{id} → muestra el detalle de una compra
+    // ==========================
+    public function detalle(int $id): void
+    {
+        if (empty($_SESSION['user_id'])) {
+            $_SESSION['error'] = 'Inicia sesión para ver tus compras.';
+            header('Location: ' . url('/login'));
+            return;
+        }
+
+        $id_usuario = (int)$_SESSION['user_id'];
+        $productos = $this->compras->obtenerDetallePorId($id, $id_usuario);
+
+        // Si no se encontraron productos, es porque la compra no existe o no pertenece al usuario.
+        if (empty($productos)) {
+            http_response_code(404);
+            echo "Compra no encontrada o no te pertenece.";
+            return;
+        }
+
+        $total = 0;
+        foreach ($productos as $p) {
+            $total += $p['cantidad'] * $p['precio_unitario'];
+        }
+
+        $this->render('Compras/detalle.php', [
+            'productos' => $productos,
+            'total' => $total
+        ]);
     }
 }
