@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
     <div class="encabezado">
 
         <div class="logo-titulo">
-            <img class="logo" src="../Public/imagenes/logo.png" alt="logo">
+            <img class="logo" src="<?= url('/imagenes/logo.png') ?>" alt="logo">
             <div class="titulo">
                 Q-Pay
             </div>
@@ -31,24 +31,35 @@
         <div class="subtitulo">
             Historial de Compras
         </div>
-            <?php /** @var array $compras */ ?>
+            
+        <?php /** @var array $compras */ ?>
+
+        <?php if (empty($compras)): ?>
+            <div class="mensaje-vacio">
+                Aún no has realizado ninguna compra.
+            </div>
+        <?php else: ?>
 
             <?php foreach ($compras as $c): ?>
-                <div class="compra">
-                    ID #<?= htmlspecialchars($c['ID']) ?> -
-                    Fecha: <?= htmlspecialchars($c['Momento']) ?> -
-                    Total: $<?= number_format($c['Total'], 2, ',', '.') ?>
+                <div class="compra-card">
+                    
+                    <div class="info-compra">
+                        <span class="dato-id">ID #<?= htmlspecialchars($c['ID']) ?></span>
+                        <span class="dato-fecha"><?= date('d/m/Y H:i', strtotime($c['Momento'])) ?> hs</span>
+                        <span class="dato-total">Total: $<?= number_format($c['Total'], 2, ',', '.') ?></span>
+                    </div>
 
-                    <!-- Botón “Consultar” lo podés dejar preparado para más adelante -->
-                    <!--
-                    <button class="boton-foreach" onclick="location.href='<?= url('/compras/consultar/' . $c['ID']) ?>'">
-                        Consultar
-                    </button>
-                    -->
+                    <div class="acciones">
+                        <a href="<?= url('/compras/detalle/' . $c['ID']) ?>" class="btn-accion btn-detalle">
+                            👁️ Ver Productos
+                        </a>
+                    </div>
+
                 </div>
             <?php endforeach; ?>    
+
+        <?php endif; ?>
     </div>
 
 </body>
-
 </html>
