@@ -98,11 +98,12 @@ class CompraModel
     public function obtenerDetallePorId(int $id, int $id_usuario): array
     {
         $sql = "SELECT
-                    p.nombre,
+                    p.Nombre AS nombre,                                -- CAMBIO 1: 'Nombre' (con mayúscula, como en tu foto)
                     d.Cantidad AS cantidad,
                     d.PrecioVenta AS precio_unitario
                 FROM transacciones_detalles d
-                JOIN productos p ON d.CodigoEAN = p.ean
+                -- CAMBIO 2: Aquí unimos usando 'CodigoEAN' que es lo que tienes en tu tabla 'productos'
+                JOIN productos p ON d.CodigoEAN = p.CodigoEAN
                 JOIN transacciones t ON d.IDtransaccion = t.ID
                 WHERE d.IDtransaccion = ? AND t.id_usuario = ?";
 
