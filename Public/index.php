@@ -53,11 +53,15 @@ $router->post('/api/compra', [ComprasController::class, 'apiGuardarCompra']);
 // Nuevas rutas para QR y detalle
 $router->get('/compras/qr/{id}', [ComprasController::class, 'qr']);
 $router->get('/compras/detalle/{id}', [ComprasController::class, 'detalle']);
+// Ruta para procesar el cambio de clave
+$router->post('/perfil/cambiar-password', [\App\Controllers\UsuariosController::class, 'procesarCambioPassword']);
 // Normalizar path: quitar BASE_URL del REQUEST_URI
 $uriFull = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $base    = rtrim(BASE_URL, '/'); // /PRAC-PROF-FINAL/Public
 $path    = preg_replace('#^' . preg_quote($base, '#') . '#', '', $uriFull);
 $path    = '/' . ltrim($path, '/');
+
+
 
 $router->dispatch($_SERVER['REQUEST_METHOD'] ?? 'GET', $path);
 
@@ -66,5 +70,7 @@ $autoload = __DIR__ . '/../vendor/autoload.php';
 if (file_exists($autoload)) {
     require_once $autoload;
 } // si no existe, seguimos sin Composer (pero Mailer no funcionará)
+
+
 
 

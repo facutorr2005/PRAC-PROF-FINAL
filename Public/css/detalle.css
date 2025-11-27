@@ -1,49 +1,164 @@
+/* 1. Definimos tus variables de marca */
+:root {
+    --color-principal: rgb(231, 230, 216);    /* Beige de fondo */
+    --color-secundario: rgb(238, 238, 9);     /* Amarillo chillón */
+    --color-terciario: rgba(0, 0, 0, 0.349);  /* Gris/Sombra */
+    --color-cuarto: black;                    /* Negro puro */
+    --fuente: 'Poppins', sans-serif;
+}
+
 body {
-    font-family: sans-serif;
-    background-color: #f4f4f4;
+    font-family: var(--fuente);
+    background-color: var(--color-principal); /* Fondo Beige */
     margin: 0;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .detalle-container {
-    max-width: 800px;
-    margin: auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 700px;
+    /* CAMBIO 1: El fondo del contenedor ahora es AMARILLO */
+    background-color: var(--color-secundario);
+    padding: 2rem;
+    
+    /* Bordes gruesos y sombra */
+    border: 3px solid var(--color-cuarto);
+    border-radius: 10px;
+    box-shadow: 4px 4px 0px var(--color-terciario);
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: var(--color-cuarto);
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* --- Lista de productos --- */
 .lista-productos {
     margin-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: 3px solid var(--color-cuarto);
+    padding-top: 10px;
 }
 
 .producto {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-cuarto); /* Línea negra un poco más notoria sobre amarillo */
+}
+
+.producto:last-child {
+    border-bottom: none;
 }
 
 .producto-info {
     font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-cuarto);
+    flex: 1;
 }
 
-.producto-cantidad,
+.producto-datos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.producto-cantidad {
+    color: #555;
+    font-weight: 600;
+    /* CAMBIO EXTRA: Fondo blanco para que resalte sobre el amarillo */
+    background-color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    border: 2px solid var(--color-cuarto); /* Le agregué un bordecito negro para definición */
+}
+
 .producto-precio {
     font-weight: bold;
+    color: var(--color-cuarto);
+    font-size: 1.1em;
+    min-width: 90px;
+    text-align: right;
 }
 
+/* --- Total --- */
 .total {
     text-align: right;
     font-size: 1.5em;
     font-weight: bold;
     margin-top: 20px;
-    color: #555;
+    padding-top: 20px;
+    border-top: 3px solid var(--color-cuarto);
+    color: var(--color-cuarto);
+    /* CAMBIO EXTRA: La caja del total ahora es BLANCA para resaltar */
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 3px solid var(--color-cuarto); /* Borde más grueso para igualar el estilo */
+}
+
+/* --- Botón Volver --- */
+.boton-container {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-volver {
+    display: inline-block;
+    text-decoration: none;
+    /* CAMBIO 2: El botón ahora es BLANCO */
+    background-color: white;
+    color: var(--color-cuarto);               /* Texto NEGRO */
+    padding: 10px 30px;
+    border-radius: 7px;
+    font-weight: bold;
+    font-size: 1rem;
+    border: 3px solid var(--color-cuarto);    /* Borde negro grueso */
+    transition: all 0.2s ease;
+    box-shadow: 3px 3px 0px var(--color-terciario);
+}
+
+.btn-volver:hover {
+    /* Al pasar el mouse, se pone amarillo (efecto inverso) */
+    background-color: rgb(172, 170, 170);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--color-terciario);
+}
+
+.btn-volver:active {
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0px var(--color-terciario);
+}
+
+/* Responsividad */
+@media (max-width: 480px) {
+    .detalle-container {
+        padding: 1.5rem;
+    }
+    
+    .producto {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .producto-datos {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
 }

@@ -300,3 +300,18 @@ body{
     padding: 0.7rem;
   }
 }
+
+/* ... resto de tu css ... */
+
+/* Estilo para inputs de solo lectura */
+.bloqueado {
+    background-color: #e9ecef; /* Gris claro */
+    color: #6c757d;           /* Texto gris oscuro */
+    cursor: not-allowed;      /* Cursor de prohibido */
+    border-color: #ced4da;
+}
+
+.bloqueado:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}

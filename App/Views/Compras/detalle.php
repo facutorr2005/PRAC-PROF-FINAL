@@ -15,17 +15,26 @@
                 <?php foreach ($productos as $producto): ?>
                     <div class="producto">
                         <span class="producto-info"><?= htmlspecialchars($producto['nombre']) ?></span>
-                        <span class="producto-cantidad">Cantidad: <?= $producto['cantidad'] ?></span>
-                        <span class="producto-precio">$<?= number_format($producto['precio_unitario'] * $producto['cantidad'], 2) ?></span>
+                        
+                        <div class="producto-datos">
+                            <span class="producto-cantidad">x<?= $producto['cantidad'] ?></span>
+                            <span class="producto-precio">$<?= number_format($producto['precio_unitario'] * $producto['cantidad'], 2, ',', '.') ?></span>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>No se encontraron productos para esta compra.</p>
+                <p style="text-align: center; color: #666;">No se encontraron productos para esta compra.</p>
             <?php endif; ?>
         </div>
 
         <div class="total">
-            Total: $<?= number_format($total ?? 0, 2) ?>
+            Total: $<?= number_format($total ?? 0, 2, ',', '.') ?>
+        </div>
+
+        <div class="boton-container">
+            <a href="<?= url('/historial') ?>" class="btn-volver">
+                &larr; Volver al Historial
+            </a>
         </div>
     </div>
 </body>

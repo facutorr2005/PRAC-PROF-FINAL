@@ -363,6 +363,68 @@ class UsuariosController{
             $this->render('Usuarios/perfil.php', ['user' => $user]);
         }
 
+        // POST /perfil/cambiar-password
+        public function procesarCambioPassword(): void{
+            // 1. Verificar sesión
+            if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+            if (empty($_SESSION['user_id'])) {
+                header('Location: ' . url('/login'));
+                return;
+            }
+
+            // 2. Solo aceptar POST
+            if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+                header('Location: ' . url('/perfil'));
+                return;
+            }
+
+            // 3. Obtener datos
+            $actual  = $_POST['pass_actual'] ?? '';
+            $nueva   = $_POST['pass_nueva'] ?? '';
+            $repetir = $_POST['pass_repetir'] ?? '';
+
+            // 4. Validaciones
+            if ($actual === '' || $nueva === '' || $repetir === '') {
+                $_SESSION['error'] = 'Todos los campos son obligatorios.';
+                header('Location: ' . url('/perfil'));
+                return;
+            }
+
+            if ($nueva !== $repetir) {
+                $_SESSION['error'] = 'Las nuevas contraseñas no coinciden.';
+                header('Location: ' . url('/perfil'));
+                return;
+            }
+
+            if (strlen($nueva) < 6) {
+                $_SESSION['error'] = 'La nueva contraseña es muy corta.';
+                header('Location: ' . url('/perfil'));
+                return;
+            }
+
+            // 5. Verificar contraseña ACTUAL (Seguridad Crítica)
+            $idUsuario = (int)$_SESSION['user_id'];
+            $user = $this->model->findById($idUsuario);
+
+            if (!$user || !password_verify($actual, $user['PasswordHash'])) {
+                $_SESSION['error'] = 'La contraseña ACTUAL es incorrecta.';
+                header('Location: ' . url('/perfil'));
+                return;
+            }
+
+            // 6. Guardar nueva contraseña
+            // Usamos el método que ya tenías en tu Modelo: updatePasswordById
+            $ok = $this->model->updatePasswordById($idUsuario, $nueva);
+
+            if ($ok) {
+                $_SESSION['ok'] = 'Contraseña actualizada correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar en base de datos.';
+            }
+
+            header('Location: ' . url('/perfil'));
+        }
+
 
         // ========================
         // LOGOUT DEL USUARIO
