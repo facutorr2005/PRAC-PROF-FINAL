@@ -59,12 +59,12 @@ body {
 
 #nombre { grid-area: nombre; }
 #apellido { grid-area: apellido; }
-label[for="fecha_nac"] { grid-area: label; }
-#fecha_nac { grid-area: fecha; }
+label[for="fechaNacimiento"] { grid-area: label; }
+#fechaNacimiento { grid-area: fecha; }
 #dni { grid-area: dni; }
 #correo { grid-area: correo; }
 #contrasena { grid-area: pass; }
-#contrasena2 { grid-area: repetir; }
+#repetircontrasena { grid-area: repetir; }
 button { grid-area: boton; }
 
 /* Campos de entrada */
@@ -127,3 +127,120 @@ a:hover {
   color: var(--color-terciario);
 }
 
+.error {
+  color: red;
+  font-family: var(--fuente);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+/* ==========================
+   📱 RESPONSIVE DESIGN
+   ========================== */
+
+/* 1024px */
+@media (max-width: 1024px) {
+  .contenido {
+    width: 70%;
+  }
+
+  .titulo {
+    font-size: 26px;
+  }
+
+  #miFormulario {
+    gap: 0.7rem 0.8rem;
+  }
+}
+
+/* 768px */
+@media (max-width: 768px) {
+  .contenido {
+    width: 80%;
+    padding: 1.2rem;
+  }
+
+  #miFormulario {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "nombre"
+      "apellido"
+      "label"
+      "fecha"
+      "dni"
+      "correo"
+      "pass"
+      "repetir"
+      "boton";
+  }
+
+  .titulo {
+    font-size: 24px;
+  }
+}
+
+/* 600px */
+@media (max-width: 600px) {
+  .contenido {
+    width: 90%;
+  }
+
+  #miFormulario input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 16px;
+  }
+
+  a {
+    font-size: 14px;
+  }
+}
+
+/* 480px */
+@media (max-width: 480px) {
+  .contenido {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .titulo {
+    font-size: 22px;
+  }
+
+  #miFormulario {
+    gap: 0.6rem;
+  }
+
+  label {
+    font-size: 13px;
+  }
+}
+
+/* 320px */
+@media (max-width: 320px) {
+  .contenido {
+    width: 98%;
+    padding: 0.8rem;
+  }
+
+  .titulo {
+    font-size: 20px;
+  }
+
+  #miFormulario input {
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 14px;
+    height: 32px;
+  }
+
+  a {
+    font-size: 13px;
+  }
+}
