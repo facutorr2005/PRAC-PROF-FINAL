@@ -13,18 +13,13 @@
 
 <body>
     <div class="encabezado">
-
         <div class="logo-titulo">
             <img class="logo" src="<?= url('/imagenes/logo.png') ?>" alt="logo">
-            <div class="titulo">
-                Q-Pay
-            </div>
+            <div class="titulo">Q-Pay</div>
         </div>
-
         <button class="boton" onclick="location.href='<?= url('/panel') ?>'">
             Volver al inicio
         </button>
-
     </div>
 
     <div class="historial">
@@ -40,11 +35,20 @@
             </div>
         <?php else: ?>
 
+            <?php 
+                // --- TRUCO VISUAL ---
+                // Calculamos cuántas compras hay en total para este usuario (ej: 5)
+                // Como el SQL las trae de la más nueva a la más vieja, 
+                // la primera que mostramos es la #5, luego la #4, etc.
+                $numero_compra = count($compras);
+            ?>
+
             <?php foreach ($compras as $c): ?>
                 <div class="compra-card">
                     
                     <div class="info-compra">
-                        <span class="dato-id">ID #<?= htmlspecialchars($c['ID']) ?></span>
+                        <span class="dato-id">Compra #<?= $numero_compra ?></span>
+                        
                         <span class="dato-fecha"><?= date('d/m/Y H:i', strtotime($c['Momento'])) ?> hs</span>
                         <span class="dato-total">Total: $<?= number_format($c['Total'], 2, ',', '.') ?></span>
                     </div>
@@ -56,6 +60,11 @@
                     </div>
 
                 </div>
+                
+                <?php 
+                    // Restamos 1 para la siguiente vuelta del bucle
+                    $numero_compra--; 
+                ?>
             <?php endforeach; ?>    
 
         <?php endif; ?>

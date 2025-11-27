@@ -75,8 +75,12 @@ class CompraModel
      * Devuelve historial de compras (ID, Momento, Total).
      * Saca el total de la suma Cantidad * PrecioVenta.
      */
-    public function obtenerHistorial(): array
-    {
+    
+    /**
+     * Devuelve historial de compras SOLO del usuario conectado.
+     */
+    public function obtenerHistorial(int $id_usuario): array{
+        // Agregamos "WHERE t.id_usuario = ?" para filtrar
         $sql = "SELECT 
                     t.ID,
                     t.Momento,
@@ -84,10 +88,14 @@ class CompraModel
                 FROM transacciones t
                 LEFT JOIN transacciones_detalles d
                   ON d.IDtransaccion = t.ID
+                WHERE t.id_usuario = ?          -- <--- ESTA ES LA CLAVE DEL FILTRO
                 GROUP BY t.ID, t.Momento
                 ORDER BY t.Momento DESC";
 
-        $st = $this->db->query($sql);
+        // Usamos prepare() en vez de query() para pasar el parámetro seguro
+        $st = $this->db->prepare($sql);
+        $st->execute([$id_usuario]);
+        
         return $st->fetchAll();
     }
 

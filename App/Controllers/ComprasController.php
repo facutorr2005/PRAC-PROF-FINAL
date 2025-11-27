@@ -52,18 +52,26 @@ class ComprasController{
     // ==========================
     //  GET /historial → lista de compras
     // ==========================
-    public function historial(): void{
 
+    // ==========================
+    //  GET /historial → lista de compras
+    // ==========================
+    
+    public function historial(): void{
+        // 1. Verificamos que esté logueado
         if (empty($_SESSION['user_id'])) {
             $_SESSION['error'] = 'Inicia sesión para ver tu historial.';
             header('Location: ' . url('/login'));
             return;
         }
 
-        $compras = $this->compras->obtenerHistorial();
+        // 2. Obtenemos el ID del usuario de la sesión
+        $id_usuario = (int)$_SESSION['user_id'];
+
+        // 3. SE LO PASAMOS a la función del modelo
+        $compras = $this->compras->obtenerHistorial($id_usuario);
 
         $this->render('Compras/historial.php', ['compras' => $compras]);
-
     }
 
     // ==========================
