@@ -21,13 +21,14 @@ class UsuarioModel{
         $this->db->exec("SET time_zone = '{$offset}'");
     }
 
+    
     /** Devuelve usuario por email (o null si no existe) */
     public function obtenerPorEmail(string $email): ?array{
-        // Unificada a columna Email
-        $sql = "SELECT Id, Nombre, Apellido, Email, PasswordHash
+        $sql = "SELECT Id, Nombre, Apellido, Email, PasswordHash, DNI, FechaNacimiento
                 FROM usuarios
                 WHERE Email = ?
                 LIMIT 1";
+                
         $st = $this->db->prepare($sql);
         $st->execute([$email]);
         $row = $st->fetch();

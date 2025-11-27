@@ -54,17 +54,21 @@
                 <div class="etiquetaCampo">Apellido:</div>
                 <input type="text" value="<?= htmlspecialchars($user['Apellido'] ?? '') ?>" class="entradaCampo bloqueado" disabled>
             </div>
-
             <div class="grupoCampo">
                 <div class="etiquetaCampo">Fecha de nacimiento:</div>
-                <input type="date" value="<?= htmlspecialchars($user['FechaNacimiento'] ?? '') ?>" class="entradaCampo bloqueado" disabled>
+                    <input type="date" 
+                       value="<?= !empty($user['FechaNacimiento']) ? date('Y-m-d', strtotime($user['FechaNacimiento'])) : '' ?>" 
+                       class="entradaCampo bloqueado" 
+                       disabled>
             </div>
 
             <div class="grupoCampo">
                 <div class="etiquetaCampo">DNI:</div>
-                <input type="text" value="<?= htmlspecialchars($user['DNI'] ?? '') ?>" class="entradaCampo bloqueado" disabled>
+                <input type="text" 
+                       value="<?= htmlspecialchars($user['DNI'] ?? $user['Dni'] ?? '') ?>" 
+                       class="entradaCampo bloqueado" 
+                       disabled>
             </div>
-        </div>
 
         <hr style="border: 1px dashed #ccc; margin: 10px 0;">
 
