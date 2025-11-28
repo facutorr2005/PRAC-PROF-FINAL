@@ -1,0 +1,180 @@
+:root {
+  --color-principal: rgb(231, 230, 216);
+  --color-secundario: rgb(238, 238, 9);
+  --color-terciario: rgba(0, 0, 0, 0.349);
+  --color-cuarto: black;
+  --fuente: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--fuente);
+  background-color: var(--color-principal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.contenido {
+  background-color: var(--color-secundario);
+  border: solid 2px var(--color-cuarto);
+  border-radius: 7px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.eslogan {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+#miFormulario {
+  border: dashed 2px var(--color-terciario);
+  border-radius: 7px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+#contrasena,
+#repetir {
+  background-color: var(--color-cuarto);
+  border: none;
+  border-radius: 7px;
+  padding: 10px;
+  width: 100%;
+  color: var(--color-principal);
+  font-size: 15px;
+}
+
+#contrasena::placeholder,
+#repetir::placeholder {
+  color: var(--color-principal);
+  font-size: 15px;
+  padding-left: 5px;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  background-color: var(--color-principal);
+  font-size: 17px;
+  width: 100%;
+  max-width: 250px;
+  height: 40px;
+  border-radius: 7px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: rgb(196, 195, 182);
+}
+
+/* 💻 Ajustes para resoluciones grandes intermedias */
+@media (max-width: 1024px) {
+  .contenido {
+    max-width: 380px;
+  }
+}
+
+/* 📱 Ajuste general para tablets medianas */
+@media (max-width: 768px) {
+  .contenido {
+    max-width: 360px;
+    padding: 1.6rem;
+  }
+  .titulo {
+    font-size: 26px;
+  }
+  .eslogan {
+    font-size: 14px;
+  }
+}
+
+/* 📱 Tablets pequeñas o pantallas medianas */
+@media (max-width: 600px) {
+  .contenido {
+    max-width: 340px;
+    padding: 1.4rem;
+  }
+  .titulo {
+    font-size: 24px;
+  }
+  .eslogan {
+    font-size: 13.5px;
+  }
+  button {
+    max-width: 230px;
+  }
+}
+
+/* 📱 Celulares estándar */
+@media (max-width: 480px) {
+  .contenido {
+    max-width: 310px;
+    padding: 1.2rem;
+    gap: 0.8rem;
+  }
+  .titulo {
+    font-size: 22px;
+  }
+  .eslogan {
+    font-size: 13px;
+  }
+  #contrasena,
+  #repetir {
+    font-size: 14px;
+    padding: 8px;
+  }
+  button {
+    width: 90%;
+    height: 38px;
+  }
+}
+
+/* 📱 Celulares chicos */
+@media (max-width: 360px) {
+  .contenido {
+    max-width: 280px;
+    padding: 1rem;
+  }
+  .titulo {
+    font-size: 20px;
+  }
+  .eslogan {
+    font-size: 12px;
+  }
+  #contrasena,
+  #repetir {
+    font-size: 13px;
+    padding: 7px;
+  }
+  button {
+    width: 100%;
+    height: 36px;
+    font-size: 14px;
+  }
+}

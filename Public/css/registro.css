@@ -1,0 +1,246 @@
+:root {
+  --color-principal: rgb(231, 230, 216);
+  --color-secundario: rgb(238, 238, 9);
+  --color-terciario: rgba(0, 0, 0, 0.349);
+  --color-cuarto: black;
+  --fuente: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--fuente);
+  background-color: var(--color-principal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenido {
+  background-color: var(--color-secundario);
+  border: solid 2px var(--color-cuarto);
+  border-radius: 7px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  width: 55%;
+}
+
+.titulo {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#miFormulario {
+  border: dashed 2px var(--color-terciario);
+  border-radius: 7px;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "nombre apellido"
+    "label label"
+    "fecha dni"
+    "correo correo"
+    "pass repetir"
+    "boton boton";
+  gap: 0.8rem 1rem;
+  width: 95%;
+}
+
+#nombre { grid-area: nombre; }
+#apellido { grid-area: apellido; }
+label[for="fechaNacimiento"] { grid-area: label; }
+#fechaNacimiento { grid-area: fecha; }
+#dni { grid-area: dni; }
+#correo { grid-area: correo; }
+#contrasena { grid-area: pass; }
+#repetircontrasena { grid-area: repetir; }
+button { grid-area: boton; }
+
+/* Campos de entrada */
+#miFormulario input[type="text"],
+#miFormulario input[type="number"],
+#miFormulario input[type="email"],
+#miFormulario input[type="password"],
+#miFormulario input[type="date"] {
+  background-color: var(--color-cuarto);
+  border: none;
+  border-radius: 7px;
+  padding: 7px;
+  width: 100%;
+  color: var(--color-principal);
+  font-size: 15px;
+}
+
+#miFormulario input::placeholder {
+  color: var(--color-principal);
+  font-size: 15px;
+  padding-left: 5px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-cuarto);
+}
+
+/* Botón */
+button {
+  border: none;
+  cursor: pointer;
+  background-color: var(--color-principal);
+  font-size: 18px;
+  height: 35px;
+  border-radius: 7px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: rgb(196, 195, 182);
+}
+
+/* Links */
+.links {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-cuarto);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--color-terciario);
+}
+
+.error {
+  color: red;
+  font-family: var(--fuente);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+/* ==========================
+   📱 RESPONSIVE DESIGN
+   ========================== */
+
+/* 1024px */
+@media (max-width: 1024px) {
+  .contenido {
+    width: 70%;
+  }
+
+  .titulo {
+    font-size: 26px;
+  }
+
+  #miFormulario {
+    gap: 0.7rem 0.8rem;
+  }
+}
+
+/* 768px */
+@media (max-width: 768px) {
+  .contenido {
+    width: 80%;
+    padding: 1.2rem;
+  }
+
+  #miFormulario {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "nombre"
+      "apellido"
+      "label"
+      "fecha"
+      "dni"
+      "correo"
+      "pass"
+      "repetir"
+      "boton";
+  }
+
+  .titulo {
+    font-size: 24px;
+  }
+}
+
+/* 600px */
+@media (max-width: 600px) {
+  .contenido {
+    width: 90%;
+  }
+
+  #miFormulario input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 16px;
+  }
+
+  a {
+    font-size: 14px;
+  }
+}
+
+/* 480px */
+@media (max-width: 480px) {
+  .contenido {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .titulo {
+    font-size: 22px;
+  }
+
+  #miFormulario {
+    gap: 0.6rem;
+  }
+
+  label {
+    font-size: 13px;
+  }
+}
+
+/* 320px */
+@media (max-width: 320px) {
+  .contenido {
+    width: 98%;
+    padding: 0.8rem;
+  }
+
+  .titulo {
+    font-size: 20px;
+  }
+
+  #miFormulario input {
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 14px;
+    height: 32px;
+  }
+
+  a {
+    font-size: 13px;
+  }
+}

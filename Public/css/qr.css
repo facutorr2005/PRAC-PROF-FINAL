@@ -1,0 +1,83 @@
+/* Agregamos esto para que el padding no aumente el tamaño total de los elementos */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Cambiamos height por min-height para evitar cortes en pantallas horizontales */
+    min-height: 100vh; 
+}
+
+.qr-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    
+    /* --- INICIO RESPONSIVIDAD --- */
+    width: 90%;          /* Ocupa el 90% del ancho en celulares */
+    max-width: 400px;    /* Pero nunca crece más de 400px en PC */
+    margin: auto;        /* Centrado extra por seguridad */
+    /* --- FIN RESPONSIVIDAD --- */
+}
+
+h1 {
+    margin-bottom: 20px;
+    /* Hacemos que el título se achique si la pantalla es muy angosta */
+    font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+#qrcode {
+    margin: 20px auto;
+    /* Hacemos el QR fluido */
+    max-width: 100%;     
+    height: auto;        
+    /* Mantenemos el tamaño original si hay espacio, pero permitimos que se achique */
+    width: 256px; 
+}
+
+/* Aseguramos que la imagen dentro del div qrcode (si es una img) también responda */
+#qrcode img {
+    max-width: 100%;
+    height: auto;
+}
+
+.boton {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 20px;
+    
+    /* Mejoramos el botón en móviles para que sea más fácil de tocar */
+    transition: background-color 0.3s ease;
+    width: 100%;         /* En celular ocupa todo el ancho */
+    max-width: 200px;    /* En PC tiene un tamaño normal */
+}
+
+.boton:hover {
+    background-color: #0056b3;
+}
+
+/* --- MEDIA QUERY PARA PANTALLAS MUY PEQUEÑAS (Móviles antiguos) --- */
+@media (max-width: 400px) {
+    .qr-container {
+        padding: 20px; /* Reducimos padding para ganar espacio */
+    }
+    
+    h1 {
+        margin-bottom: 15px;
+    }
+}
