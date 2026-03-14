@@ -89,8 +89,10 @@ TRUNCATE TABLE `recuperacion_contrasena`;
 DROP TABLE IF EXISTS `transacciones`;
 CREATE TABLE IF NOT EXISTS `transacciones` (
   `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `IDusuario` int(10) UNSIGNED NOT NULL,
   `Momento` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `idx_tx_user` (`IDusuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -136,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `DNI` varchar(50) DEFAULT NULL,
   `FechaNacimiento` date DEFAULT NULL,
   `PasswordHash` varchar(255) NOT NULL,
+  `Estado` enum('activo','inactivo') NOT NULL DEFAULT 'activo',
   `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
   `UpdatedAt` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`ID`),
@@ -151,10 +154,10 @@ TRUNCATE TABLE `usuarios`;
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `Email`, `DNI`, `FechaNacimiento`, `PasswordHash`, `CreatedAt`, `UpdatedAt`) VALUES
-(1, 'Demo', 'Usuario', 'demo@qpay.test', '12345678', '1990-01-01', '<PEGA_AQUÍ_EL_HASH_GENERADO_CON_password_hash>', '2025-10-19 00:15:29', NULL),
-(3, 'dario alejandro', 'alarcon', 'darioalarcon635@gmail.com', '38904923', '1995-03-29', '$2y$10$rtaXazBgK4CJWdYPZf4u8udF1.7wO70.L.oAIcE95geK6lYVTtDxK', '2025-10-31 23:44:40', '2025-11-01 00:49:07'),
-(5, 'Ivan Gonzalo', 'Lapresa', 'ivangonzalolap@gmail.com', '39253505', '1995-11-04', '$2y$10$U8aCU7EMpeA6savSjPSTEObonCe8PEMJ5P/iZj3bBcHahAVV2wwFq', '2025-11-05 20:18:10', NULL);
+INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `Email`, `DNI`, `FechaNacimiento`, `PasswordHash`, `Estado`, `CreatedAt`, `UpdatedAt`) VALUES
+(1, 'Demo', 'Usuario', 'demo@qpay.test', '12345678', '1990-01-01', '<PEGA_AQUÍ_EL_HASH_GENERADO_CON_password_hash>', 'activo', '2025-10-19 00:15:29', NULL),
+(3, 'dario alejandro', 'alarcon', 'darioalarcon635@gmail.com', '38904923', '1995-03-29', '$2y$10$rtaXazBgK4CJWdYPZf4u8udF1.7wO70.L.oAIcE95geK6lYVTtDxK', 'activo', '2025-10-31 23:44:40', '2025-11-01 00:49:07'),
+(5, 'Ivan Gonzalo', 'Lapresa', 'ivangonzalolap@gmail.com', '39253505', '1995-11-04', '$2y$10$U8aCU7EMpeA6savSjPSTEObonCe8PEMJ5P/iZj3bBcHahAVV2wwFq', 'activo', '2025-11-05 20:18:10', NULL);
 
 --
 -- Restricciones para tablas volcadas
@@ -165,6 +168,12 @@ INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `Email`, `DNI`, `FechaNacimi
 --
 ALTER TABLE `recuperacion_contrasena`
   ADD CONSTRAINT `fk_recuperacion_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`ID`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `transacciones`
+--
+ALTER TABLE `transacciones`
+  ADD CONSTRAINT `fk_tx_usuario` FOREIGN KEY (`IDusuario`) REFERENCES `usuarios` (`ID`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `transacciones_detalles`

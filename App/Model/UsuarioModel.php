@@ -22,11 +22,11 @@ class UsuarioModel{
     }
 
     
-    /** Devuelve usuario por email (o null si no existe) */
+    /** Devuelve usuario por email (o null si no existe o está inactivo) */
     public function obtenerPorEmail(string $email): ?array{
-        $sql = "SELECT Id, Nombre, Apellido, Email, PasswordHash, DNI, FechaNacimiento
+        $sql = "SELECT Id, Nombre, Apellido, Email, PasswordHash, DNI, FechaNacimiento, Estado
                 FROM usuarios
-                WHERE Email = ?
+                WHERE Email = ? AND Estado = 'activo'
                 LIMIT 1";
                 
         $st = $this->db->prepare($sql);
@@ -40,7 +40,7 @@ class UsuarioModel{
         return $this->obtenerPorEmail($email);
     }
 
-    /** ¿Existe el email? */
+    /** ¿Existe el email? (sin importar el estado, para que no puedan registrarse de nuevo con el mismo email) */
     public function emailExiste(string $email): bool{
 
         // Unificada a columna Email (antes decía Correo)
@@ -182,7 +182,7 @@ class UsuarioModel{
     }
 
     public function findById(int $id): ?array {
-        $sql = "SELECT * FROM usuarios WHERE Id = :id LIMIT 1";
+        $sql = "SELECT * FROM usuarios WHERE Id = :id AND Estado = 'activo' LIMIT 1";
         $st = $this->db->prepare($sql);
         $st->execute([':id' => $id]);
         $row = $st->fetch(\PDO::FETCH_ASSOC);
@@ -190,23 +190,10 @@ class UsuarioModel{
     }
 
     public function eliminarPorId(int $id): bool {
-        // Si tenés tablas relacionadas (recuperaciones, etc.) y NO hay FK ON DELETE CASCADE,
-        // borrá primero los registros hijos.
-        $this->db->beginTransaction();
-        try {
-            // ejemplo si tuvieras tabla de recuperación:
-            // $this->db->prepare("DELETE FROM recuperaciones WHERE id_usuario = :id")
-            //          ->execute([':id' => $id]);
-
-            $ok = $this->db->prepare("DELETE FROM usuarios WHERE Id = :id")
-                       ->execute([':id' => $id]);
-
-            $this->db->commit();
-            return $ok;
-        } catch (\Throwable $e) {
-            $this->db->rollBack();
-            return false;
-        }
+        // Baja lógica: marcamos al usuario como inactivo, manteniendo sus compras
+        $sql = "UPDATE usuarios SET Estado = 'inactivo' WHERE Id = :id";
+        $st = $this->db->prepare($sql);
+        return $st->execute([':id' => $id]);
     }
 
 }

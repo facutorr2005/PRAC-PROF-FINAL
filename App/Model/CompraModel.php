@@ -34,8 +34,8 @@ class CompraModel
             $this->db->beginTransaction();
 
             // Inserto la transacción, asociándola al usuario.
-            // NOTA: Se asume que la tabla `transacciones` tiene una columna `id_usuario`.
-            $sqlTx = "INSERT INTO transacciones (id_usuario, Momento) VALUES (?, NOW())";
+            // NOTA: Se usa IDusuario como definimos en el SQL.
+            $sqlTx = "INSERT INTO transacciones (IDusuario, Momento) VALUES (?, NOW())";
             $stTx = $this->db->prepare($sqlTx);
             $stTx->execute([$id_usuario]);
             $idTransaccion = (int)$this->db->lastInsertId();
@@ -80,7 +80,7 @@ class CompraModel
      * Devuelve historial de compras SOLO del usuario conectado.
      */
     public function obtenerHistorial(int $id_usuario): array{
-        // Agregamos "WHERE t.id_usuario = ?" para filtrar
+        // Agregamos "WHERE t.IDusuario = ?" para filtrar
         $sql = "SELECT 
                     t.ID,
                     t.Momento,
@@ -88,7 +88,7 @@ class CompraModel
                 FROM transacciones t
                 LEFT JOIN transacciones_detalles d
                   ON d.IDtransaccion = t.ID
-                WHERE t.id_usuario = ?          -- <--- ESTA ES LA CLAVE DEL FILTRO
+                WHERE t.IDusuario = ?          -- <--- ESTA ES LA CLAVE DEL FILTRO
                 GROUP BY t.ID, t.Momento
                 ORDER BY t.Momento DESC";
 
@@ -113,7 +113,7 @@ class CompraModel
                 -- CAMBIO 2: Aquí unimos usando 'CodigoEAN' que es lo que tienes en tu tabla 'productos'
                 JOIN productos p ON d.CodigoEAN = p.CodigoEAN
                 JOIN transacciones t ON d.IDtransaccion = t.ID
-                WHERE d.IDtransaccion = ? AND t.id_usuario = ?";
+                WHERE d.IDtransaccion = ? AND t.IDusuario = ?";
 
         $st = $this->db->prepare($sql);
         $st->execute([$id, $id_usuario]);
@@ -125,7 +125,7 @@ class CompraModel
      */
     public function obtenerPorId(int $id, int $id_usuario): ?array
     {
-        $sql = "SELECT * FROM transacciones WHERE ID = ? AND id_usuario = ?";
+        $sql = "SELECT * FROM transacciones WHERE ID = ? AND IDusuario = ?";
         $st = $this->db->prepare($sql);
         $st->execute([$id, $id_usuario]);
         $result = $st->fetch();
