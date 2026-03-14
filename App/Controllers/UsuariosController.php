@@ -106,7 +106,7 @@ class UsuariosController{
         $pass     = $_POST['contrasena'] ?? '';
         $pass2    = $_POST['contrasena2'] ?? '';
 
-        // Validaciones
+        // Validaciones básicas
         if ($nombre==='' || $apellido==='' || $correo==='' || $pass==='' || $pass2==='') {
             $_SESSION['error'] = 'Completá los campos obligatorios.';
             header('Location: ' . url('/registro')); return;
@@ -119,12 +119,27 @@ class UsuariosController{
             $_SESSION['error'] = 'Las contraseñas no coinciden.';
             header('Location: ' . url('/registro')); return;
         }
+
+        // 1. ¿Ya existe un usuario ACTIVO? (el emailExiste que modificamos antes)
         if ($this->model->emailExiste($correo)) {
-            $_SESSION['error'] = 'Ya existe un usuario con ese correo.';
+            $_SESSION['error'] = 'Ya existe un usuario activo con ese correo.';
             header('Location: ' . url('/registro')); return;
         }
 
-        // Crear usuario
+        // 2. ¿Existe un usuario INACTIVO? (Aquí reciclamos la cuenta)
+        if ($this->model->esUsuarioInactivo($correo)) {
+            // Reactivamos y actualizamos la pass por si el usuario quiere cambiarla
+            if ($this->model->reactivarCuenta($correo, $pass)) {
+                // Opcional: Actualizamos los otros datos por si los cambió en el form
+                $this->model->actualizarPerfilPorEmail($correo, $nombre, $apellido, $dni, $nac);
+                
+                $_SESSION['ok'] = '¡Tu cuenta ha sido reactivada con éxito! Ya podés entrar.';
+                header('Location: ' . url('/login'));
+                return;
+            }
+        }
+
+        // 3. Crear usuario nuevo (solo si no existía de ninguna forma)
         $id = $this->model->crear($nombre, $apellido, $correo, $dni, $nac, $pass);
         if ($id <= 0) {
             $_SESSION['error'] = 'No se pudo crear el usuario.';

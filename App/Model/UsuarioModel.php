@@ -41,32 +41,55 @@ class UsuarioModel{
         return $this->obtenerPorEmail($email);
     }
 
-    /** ¿Existe el email? */
-    public function emailExiste(string $email): bool{
+    
 
-        // Unificada a columna Email (antes decía Correo)
-        // Se busca en todos los usuarios, activos o inactivos, para que la DB no tire error de clave única
-        $sql = "SELECT 1 FROM usuarios WHERE Email = ? LIMIT 1";
+    /** ¿Existe el email? */
+    public function emailExiste(string $email): bool {
+        $sql = "SELECT 1 FROM usuarios WHERE Email = ? AND Estado = 'activo' LIMIT 1";
         $st  = $this->db->prepare($sql);
         $st->execute([$email]);
         return (bool)$st->fetchColumn();
     }
 
-    /** Crear usuario */
-    public function crear(
+    // --- PEGA LOS NUEVOS MÉTODOS AQUÍ ---
 
-        string $nombre,
-        string $apellido,
-        string $email,
-        string $dni,
-        string $fechaNac,
-        string $password
-        ): int {
+    /** Verifica si existe un usuario inactivo con ese email */
+    public function esUsuarioInactivo(string $email): bool {
+        $sql = "SELECT 1 FROM usuarios WHERE Email = ? AND Estado = 'inactivo' LIMIT 1";
+        $st = $this->db->prepare($sql);
+        $st->execute([$email]);
+        return (bool)$st->fetchColumn();
+    }
+
+    /** Reactiva una cuenta inactiva y actualiza su contraseña */
+    public function reactivarCuenta(string $email, string $password): bool {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE usuarios 
+                SET Estado = 'activo', PasswordHash = ? 
+                WHERE Email = ? AND Estado = 'inactivo'";
+        $st = $this->db->prepare($sql);
+        return $st->execute([$hash, $email]);
+    }
+
+    /** Actualiza los datos de un usuario usando el Email como referencia */
+    public function actualizarPerfilPorEmail(string $email, string $nombre, string $apellido, string $dni, string $fechaNac): bool {
+        $sql = "UPDATE usuarios 
+            SET Nombre = ?, Apellido = ?, DNI = ?, FechaNacimiento = ? 
+            WHERE Email = ?";
+        $st = $this->db->prepare($sql);
+        return $st->execute([$nombre, $apellido, $dni, $fechaNac, $email]);
+    }
+
+    // ------------------------------------
+
+    /** Crear usuario */
+    public function crear(string $nombre, string $apellido, string $email, string $dni, string $fechaNac, string $password): int {
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         // Unificada a columna Email (antes decía Correo)
         $sql = "INSERT INTO usuarios (Nombre, Apellido, Email, DNI, FechaNacimiento, PasswordHash)
                 VALUES (?, ?, ?, ?, ?, ?)";
+        
         $st = $this->db->prepare($sql);
         $st->execute([$nombre, $apellido, $email, $dni, $fechaNac, $hash]);
 
