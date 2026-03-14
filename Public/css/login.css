@@ -1,9 +1,11 @@
 :root {
-  --color-principal: rgb(231, 230, 216);
-  --color-secundario: rgb(238, 238, 9);
-  --color-terciario: rgba(0, 0, 0, 0.349);
-  --color-cuarto: black;
+  --color-fondo: #f4f7f6;
+  --color-verde-principal: #39b54a;
+  --color-verde-gradiente: linear-gradient(135deg, #44c756 0%, #2e9e3d 100%);
+  --color-texto-oscuro: #2d3748;
+  --color-texto-suave: #718096;
   --fuente: "Poppins", sans-serif;
+  --sombra-tarjeta: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -15,243 +17,140 @@
 body {
   min-height: 100vh;
   font-family: var(--fuente);
-  background-color: var(--color-principal);
+  background-color: var(--color-fondo);
+  /* Patrón de puntos sutil como en la referencia */
+  background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
+  background-size: 25px 25px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .formulario {
-  background-color: var(--color-secundario);
-  border: solid 2px var(--color-cuarto);
-  border-radius: 7px;
-  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden; /* Corta el gradiente de la cabecera en las esquinas */
+  box-shadow: var(--sombra-tarjeta);
+  width: 100%;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 0.8rem;
-  width: 45%;
+  padding-bottom: 2.5rem;
+}
+
+/* Franja verde superior */
+.header-verde {
+  background: var(--color-verde-gradiente);
+  width: 100%;
+  padding: 1.8rem;
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
 }
 
 .titulo {
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-texto-oscuro);
+  margin-bottom: 0.3rem;
   text-align: center;
 }
 
 .eslogan {
-  font-size: 16px;
+  font-size: 14px;
+  color: var(--color-texto-suave);
+  margin-bottom: 1.8rem;
   text-align: center;
 }
 
 #miFormulario {
-  border: dashed 2px var(--color-terciario);
-  border-radius: 7px;
-  padding: 1rem;
+  width: 85%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
-  width: 95%;
 }
 
-#correo,
-#contrasena {
-  background-color: var(--color-cuarto);
-  border: none;
-  border-radius: 7px;
-  padding: 7px;
+input {
   width: 100%;
-  color: var(--color-principal);
-  font-size: 15px;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  font-size: 14px;
+  color: var(--color-texto-oscuro);
+  transition: all 0.3s ease;
+  outline: none;
 }
 
-#correo::placeholder,
-#contrasena::placeholder {
-  color: var(--color-principal);
-  padding: 5px;
-  font-size: 15px;
+input:focus {
+  border-color: var(--color-verde-principal);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(57, 181, 74, 0.1);
+}
+
+input::placeholder {
+  color: #a0aec0;
 }
 
 button {
   border: none;
   cursor: pointer;
-  background-color: var(--color-principal);
-  font-size: 20px;
-  width: 60%;
-  height: 35px;
-  border-radius: 7px;
-  transition: background-color 0.2s;
+  background: var(--color-verde-gradiente);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 0.8rem;
+  transition: transform 0.1s, opacity 0.2s;
+  box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
 }
 
 button:hover {
-  background-color: rgb(196, 195, 182);
+  opacity: 0.95;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 .links {
-  margin-top: 0.5rem;
+  margin-top: 1.8rem;
   display: flex;
-  gap: 0.7rem;
+  gap: 1.2rem;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 a {
   text-decoration: none;
-  color: var(--color-cuarto);
-  font-size: 15px;
+  color: #3182ce; /* Azul para links como en la imagen */
+  font-size: 13px;
+  font-weight: 500;
 }
 
 a:hover {
-  color: var(--color-terciario);
+  text-decoration: underline;
 }
 
 .error {
-  color: red;
+  color: #e53e3e;
   font-family: var(--fuente);
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  width: 100%;
+  margin: 0.5rem 0;
+  min-height: 20px;
 }
 
-/* ==========================
-   📱 RESPONSIVE DESIGN
-   ========================== */
-
-/* 1024px */
-@media (max-width: 1024px) {
-  .formulario {
-    width: 60%;
-    padding: 1.2rem 1.5rem;
-  }
-
-  .titulo {
-    font-size: 30px;
-  }
-
-  button {
-    width: 65%;
-  }
-}
-
-/* 768px */
-@media (max-width: 768px) {
-  .formulario {
-    width: 70%;
-    padding: 1rem;
-  }
-
-  .titulo {
-    font-size: 28px;
-  }
-
-  .eslogan {
-    font-size: 15px;
-  }
-
-  #miFormulario {
-    width: 100%;
-    gap: 0.9rem;
-  }
-
-  button {
-    width: 70%;
-    font-size: 18px;
-  }
-}
-
-/* 600px */
-@media (max-width: 600px) {
-  .formulario {
-    width: 80%;
-  }
-
-  .titulo {
-    font-size: 26px;
-  }
-
-  .eslogan {
-    font-size: 14px;
-  }
-
-  #correo,
-  #contrasena {
-    font-size: 14px;
-    padding: 6px;
-  }
-
-  button {
-    font-size: 16px;
-    width: 75%;
-  }
-
-  a {
-    font-size: 14px;
-  }
-}
-
-/* 480px */
+/* Responsive */
 @media (max-width: 480px) {
   .formulario {
-    width: 90%;
-    padding: 0.8rem;
-  }
-
-  .titulo {
-    font-size: 24px;
-  }
-
-  .eslogan {
-    font-size: 13px;
-  }
-
-  #correo,
-  #contrasena {
-    font-size: 13.5px;
-  }
-
-  button {
-    width: 80%;
-    font-size: 15px;
-  }
-
-  a {
-    font-size: 13px;
-  }
-}
-
-/* 320px */
-@media (max-width: 320px) {
-  .formulario {
-    width: 95%;
-    padding: 0.6rem;
-  }
-
-  .titulo {
-    font-size: 22px;
-  }
-
-  .eslogan {
-    font-size: 12px;
-  }
-
-  #correo,
-  #contrasena {
-    font-size: 13px;
-    padding: 5px;
-  }
-
-  button {
-    width: 85%;
-    font-size: 14px;
-    height: 32px;
-  }
-
-  a {
-    font-size: 12px;
+    width: 100%;
   }
 }
