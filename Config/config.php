@@ -9,7 +9,7 @@ ini_set('display_errors', '1');
 error_reporting(E_ALL);
 
 // Base del sitio (ajustar si cambiamos la carpeta)
-define('BASE_URL', '/PRAC-PROF-FINAL/Public');
+define('BASE_URL', '');
 
 function url(string $path = '/'): string {
   $path = '/' . ltrim($path, '/');
@@ -25,9 +25,10 @@ define('VIEW_PATH', APP_PATH . '/Views'); // ⇐ App/Views
 
 
 // DB (ajustamos credenciales si hiciera falta)
-define('DB_DSN',  'mysql:host=localhost;dbname=prac_prof_final;charset=utf8mb4');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+// Credenciales para InfinityFree
+define('DB_DSN', 'mysql:host=sql100.infinityfree.com;dbname=if0_40531076_qpay;charset=utf8mb4');
+define('DB_USER', 'if0_40531076');
+define('DB_PASS', 'qpayproyecto');
 
 // --- Email (Brevo SMTP) ---
 define('MAIL_HOST', 'smtp-relay.brevo.com');

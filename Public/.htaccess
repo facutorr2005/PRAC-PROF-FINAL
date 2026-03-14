@@ -1,7 +1,11 @@
-RewriteEngine On
-RewriteBase /PRAC-PROF-FINAL/Public/
+<IfModule mod_rewrite.c>
+    Options -Multiviews
+    RewriteEngine On
+    
+    # CORRECCIÓN: Quitamos el nombre de tu carpeta local
+    RewriteBase /Public/
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
-
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.+)$ index.php [QSA,L]
+</IfModule>
