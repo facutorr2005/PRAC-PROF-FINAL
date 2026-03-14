@@ -1,9 +1,13 @@
 :root {
-  --color-principal: rgb(231, 230, 216);
-  --color-secundario: rgb(238, 238, 9);
-  --color-terciario: rgba(0, 0, 0, 0.349);
-  --color-cuarto: black;
+  --color-fondo: #f4f7f6;
+  --color-verde-principal: #39b54a;
+  --color-verde-gradiente: linear-gradient(135deg, #44c756 0%, #2e9e3d 100%);
+  --color-texto-oscuro: #2d3748;
+  --color-texto-suave: #718096;
   --fuente: "Poppins", sans-serif;
+  --sombra-tarjeta: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --color-blanco: #ffffff;
+  --color-borde: #e2e8f0;
 }
 
 * {
@@ -15,7 +19,9 @@
 body {
   min-height: 100vh;
   font-family: var(--fuente);
-  background-color: var(--color-principal);
+  background-color: var(--color-fondo);
+  background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
+  background-size: 25px 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,10 +29,9 @@ body {
 }
 
 .formulario {
-  background-color: var(--color-secundario);
-  border: solid 2px var(--color-cuarto);
-  border-radius: 7px;
-  padding: 2rem;
+  background-color: var(--color-blanco);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,25 +39,24 @@ body {
   width: 100%;
   max-width: 450px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--sombra-tarjeta);
 }
 
 .titulo {
-  font-size: 34px;
-  font-weight: bold;
-  margin-bottom: 0.7rem;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-texto-oscuro);
+  margin-bottom: 0.5rem;
 }
 
 .eslogan {
-  font-size: 17px;
+  font-size: 14px;
+  color: var(--color-texto-suave);
   margin-bottom: 1.5rem;
-  line-height: 1.3;
+  line-height: 1.5;
 }
 
 #codeForm {
-  border: dashed 2px var(--color-terciario);
-  border-radius: 7px;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,59 +69,78 @@ body {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  flex-wrap: nowrap; /* 🔥 evita que los inputs salten de línea */
+  flex-wrap: nowrap;
   width: 100%;
-  max-width: 340px; /* asegura que quepan sin romperse */
+  max-width: 340px;
 }
 
 .code-input input {
-  flex: 1; /* 🔥 permite que los inputs se adapten al ancho disponible */
+  flex: 1;
   min-width: 35px;
   max-width: 50px;
   aspect-ratio: 1 / 1.2;
   font-size: 1.6rem;
   text-align: center;
-  border: 2px dashed var(--color-cuarto);
-  border-radius: 7px;
-  background-color: var(--color-principal);
+  border: 1px solid var(--color-borde);
+  border-radius: 10px;
+  background-color: #f8fafc;
+  color: var(--color-texto-oscuro);
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
 }
 
 .code-input input:focus {
-  border-color: #007bff;
+  border-color: var(--color-verde-principal);
+  background-color: var(--color-blanco);
+  box-shadow: 0 0 0 4px rgba(57, 181, 74, 0.1);
 }
 
 button {
   border: none;
   cursor: pointer;
-  background-color: var(--color-principal);
-  font-size: 18px;
-  width: 60%;
-  height: 42px;
-  border-radius: 7px;
-  transition: background-color 0.2s;
+  background: var(--color-verde-gradiente);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  transition: transform 0.1s, opacity 0.2s;
+  box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
 }
 
 button:hover {
-  background-color: rgb(196, 195, 182);
+  opacity: 0.95;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 .temporizador {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
-  color: red;
-  margin-bottom: 1rem;
+  color: #e53e3e;
+  margin-bottom: 0.5rem;
 }
 
 .error {
-  color: red;
+  color: #e53e3e;
   font-family: var(--fuente);
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
   width: 100%;
+  min-height: 20px;
+}
+
+.ok {
+  font-family: var(--fuente);
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 0.8rem;
+  width: 100%;
+  min-height: 20px;
 }
 
 /* ===========================
@@ -135,11 +158,11 @@ button:hover {
 @media (max-width: 768px) {
   .formulario {
     max-width: 380px;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
 
   .titulo {
-    font-size: 28px;
+    font-size: 22px;
   }
 
   .code-input input {
@@ -167,8 +190,9 @@ button:hover {
 /* 480px - celulares medianos */
 @media (max-width: 480px) {
   .formulario {
-    max-width: 320px;
-    padding: 1.2rem;
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
   }
 
   .code-input {
@@ -186,7 +210,7 @@ button:hover {
 @media (max-width: 320px) {
   .formulario {
     max-width: 280px;
-    padding: 1rem;
+    padding: 1.2rem 1rem;
   }
 
   .code-input {
@@ -200,10 +224,10 @@ button:hover {
   }
 
   .titulo {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .eslogan {
-    font-size: 14px;
+    font-size: 13px;
   }
 }

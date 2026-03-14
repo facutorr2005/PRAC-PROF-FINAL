@@ -363,6 +363,44 @@ class UsuariosController{
             $this->render('Usuarios/perfil.php', ['user' => $user]);
         }
 
+        // POST /perfil/actualizar-datos
+        public function actualizarPerfil(): void{
+            if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+            if (empty($_SESSION['user_id'])) {
+                header('Location: ' . url('/login'));
+                return;
+            }
+
+            if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+                header('Location: ' . url('/perfil'));
+                return;
+            }
+
+            $idUsuario = (int)$_SESSION['user_id'];
+            $nombre    = trim($_POST['nombre'] ?? '');
+            $apellido  = trim($_POST['apellido'] ?? '');
+            $dni       = trim($_POST['dni'] ?? '');
+            $fechaNac  = trim($_POST['fecha_nacimiento'] ?? '');
+
+            if ($nombre === '' || $apellido === '' || $dni === '' || $fechaNac === '') {
+                $_SESSION['error'] = 'Todos los campos personales son obligatorios.';
+                header('Location: ' . url('/perfil'));
+                return;
+            }
+
+            $ok = $this->model->actualizarPerfil($idUsuario, $nombre, $apellido, $dni, $fechaNac);
+
+            if ($ok) {
+                // Actualizar la sesión si guardan nombre ahí
+                $_SESSION['user_name'] = $nombre;
+                $_SESSION['ok'] = 'Datos personales actualizados correctamente.';
+            } else {
+                $_SESSION['error'] = 'Error al actualizar los datos en la base de datos.';
+            }
+
+            header('Location: ' . url('/perfil'));
+        }
+
         // POST /perfil/cambiar-password
         public function procesarCambioPassword(): void{
             // 1. Verificar sesión

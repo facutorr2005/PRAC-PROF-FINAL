@@ -157,6 +157,15 @@ class UsuarioModel{
     }
 
 
+    /** Actualizar datos personales del usuario */
+    public function actualizarPerfil(int $id, string $nombre, string $apellido, string $dni, string $fechaNac): bool {
+        $sql = "UPDATE usuarios
+                SET Nombre = ?, Apellido = ?, DNI = ?, FechaNacimiento = ?
+                WHERE Id = ?";
+        $st = $this->db->prepare($sql);
+        return $st->execute([$nombre, $apellido, $dni, $fechaNac, $id]);
+    }
+
     /** Actualizar password por ID de usuario */
     public function updatePasswordById(int $userId, string $plain): bool{
 
