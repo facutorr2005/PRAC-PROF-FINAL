@@ -1,13 +1,9 @@
-:root {
-  --color-fondo: #f4f7f6;
-  --color-verde-principal: #39b54a;
-  --color-verde-gradiente: linear-gradient(135deg, #44c756 0%, #2e9e3d 100%);
-  --color-texto-oscuro: #2d3748;
-  --color-texto-suave: #718096;
-  --fuente: "Poppins", sans-serif;
-  --sombra-tarjeta: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --color-blanco: #ffffff;
-  --color-borde: #e2e8f0;
+:root{
+  --color-principal: rgb(231, 230, 216);
+  --color-secundario: rgb(238, 238, 9);
+  --color-terciario: rgba(0, 0, 0, 0.349);
+  --color-cuarto: black;
+  --fuente: 'Poppins', sans-serif;
 }
 
 *{ 
@@ -19,9 +15,7 @@
 body{
   min-height: 100vh;
   font-family: var(--fuente);
-  background-color: var(--color-fondo);
-  background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
-  background-size: 25px 25px;
+  background-color: var(--color-principal);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -29,14 +23,13 @@ body{
 
 
 .encabezado{
-    background: var(--color-blanco);
+    background-color: var(--color-secundario);
     min-height: 8rem;
     display: flex;
     align-items: center;
-    border-bottom: solid 1px var(--color-borde);
+    border-bottom: solid 3px var(--color-terciario);
     padding: 1rem 2rem;
     gap: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .logoTitulo{
@@ -57,7 +50,6 @@ body{
 .titulo{
     font-size: clamp(30px, 5vw, 70px);
     font-weight: bold;
-    color: var(--color-verde-principal);
     white-space: nowrap;
 }
 
@@ -70,39 +62,37 @@ body{
 
 .boton{
     border: none;
-    border-radius: 10px;
-    font-size: clamp(14px, 1.5vw, 16px);
-    padding: 0.8rem 1.2rem;
-    background: var(--color-verde-gradiente);
-    color: white;
-    font-weight: 600;
+    border-radius: 7px;
+    font-size: clamp(14px, 1.5vw, 20px);
+    padding: 0.5rem 1rem;
+    background-color: var(--color-principal);
+    font-weight: bold;
     cursor: pointer;
-    transition: transform 0.1s, opacity 0.2s;
-    box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
+    transition: background-color 0.3s ease, transform 0.12s ease;
 }
 
 .boton:hover{
-    opacity: 0.95;
+    background-color: rgb(192, 192, 191);
 }
 
 .eliminarBoton{
-    background: #e53e3e;
-    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.2);
+    background-color: red;
+    color: white;
 }
 
 .eliminarBoton:hover{
-    opacity: 0.95;
-    background: #c53030;
+    background-color: darkred;
+    transform: scale(1.03);
 }
 
 .contenidoPerfil{
     width: 80%;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 3.5rem auto;
-    padding: 2.5rem;
-    background-color: var(--color-blanco);
-    border-radius: 16px;
-    box-shadow: var(--sombra-tarjeta);
+    padding: 2rem;
+    background-color: var(--color-secundario);
+    border-radius: 10px;
+    border: 3px solid var(--color-cuarto);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -110,78 +100,68 @@ body{
 
 /* TÍTULO */
 .perfilTitulo{
-    font-size: clamp(20px, 3vw, 24px);
+    font-size: clamp(24px, 3vw, 32px);
     font-weight: 600;
-    color: var(--color-texto-oscuro);
+    color: var(--color-cuarto);
     text-align: center;
-    margin-bottom: 0.5rem;
 }
 
 /* FORM */
 .formularioPerfil{
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.5rem;
 }
 
 .grupoCampo{
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.3rem;
 }
 
 .etiquetaCampo{
     font-weight: 600;
-    font-size: 14px;
-    color: var(--color-texto-suave);
+    color: var(--color-cuarto);
 }
 
 .entradaCampo{
-    padding: 14px 16px;
-    font-size: 14px;
-    border: 1px solid var(--color-borde);
-    border-radius: 10px;
-    background-color: #f8fafc;
-    color: var(--color-texto-oscuro);
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border: 2px solid var(--color-terciario);
+    border-radius: 7px;
     outline: none;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .entradaCampo:focus{
-    border-color: var(--color-verde-principal);
-    background-color: #fff;
-    box-shadow: 0 0 0 4px rgba(57, 181, 74, 0.1);
+    border-color: var(--color-secundario);
+    box-shadow: 0 0 5px var(--color-secundario);
 }
 
 .errorCampo{
-    color: #e53e3e;
+    color: red;
     font-size: 0.9rem;
     min-height: 1.2em;
 }
 
 /* BOTÓN GUARDAR */
 .guardarBoton{
-    padding: 14px 16px;
-    font-size: clamp(14px, 2vw, 16px);
+    padding: 0.8rem 1.5rem;
+    font-size: clamp(16px, 2vw, 20px);
     border: none;
-    border-radius: 10px;
-    background: var(--color-verde-gradiente);
-    color: white;
-    font-weight: 600;
+    border-radius: 7px;
+    background-color: var(--color-secundario);
+    color: var(--color-cuarto);
+    font-weight: bold;
     cursor: pointer;
-    transition: transform 0.1s, opacity 0.2s;
+    transition: background-color 0.3s ease, transform 0.12s ease;
     align-self: center;
     min-width: 220px;
-    margin-top: 1rem;
-    box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
 }
 
 .guardarBoton:hover{
-    opacity: 0.95;
-}
-
-.guardarBoton:active {
-    transform: scale(0.98);
+    background-color: rgb(192, 192, 191);
+    transform: scale(1.03);
 }
 
 /* ============================
@@ -191,8 +171,8 @@ body{
 /* 1024px: ajustar ancho del contenedor y logo */
 @media (max-width: 1024px){
   .contenidoPerfil{
-    width: 85%;
-    padding: 2rem;
+    width: 75%;
+    padding: 1.8rem;
   }
   .logo{
     height: 90px;
@@ -214,13 +194,13 @@ body{
     width: 80px;
   }
   .contenidoPerfil{
-    width: 90%;
+    width: 85%;
     padding: 1.5rem;
     margin: 2.5rem auto;
   }
   .boton{
-    font-size: 14px;
-    padding: 0.6rem 1rem;
+    font-size: 15px;
+    padding: 0.4rem 0.8rem;
   }
   .guardarBoton{
     min-width: 200px;
@@ -246,7 +226,6 @@ body{
     width: 100%;
     justify-content: flex-end;
     margin-left: 0;
-    margin-top: 0.5rem;
   }
   .logo{
     height: 72px;
@@ -279,7 +258,7 @@ body{
     font-size: 22px;
   }
   .contenidoPerfil{
-    width: 95%;
+    width: 94%;
     padding: 1rem;
     margin: 1.2rem auto;
   }
@@ -308,7 +287,7 @@ body{
     font-size: 20px;
   }
   .contenidoPerfil{
-    width: 98%;
+    width: 96%;
     padding: 0.9rem;
     margin: 1rem auto;
   }
@@ -317,21 +296,22 @@ body{
     padding: 0.5rem 0.8rem;
   }
   .guardarBoton{
-    font-size: 14px;
+    font-size: 15px;
     padding: 0.7rem;
   }
 }
 
+/* ... resto de tu css ... */
+
 /* Estilo para inputs de solo lectura */
 .bloqueado {
-    background-color: #e2e8f0;
-    color: #718096;
-    cursor: not-allowed;
-    border-color: #cbd5e0;
+    background-color: #e9ecef; /* Gris claro */
+    color: #6c757d;           /* Texto gris oscuro */
+    cursor: not-allowed;      /* Cursor de prohibido */
+    border-color: #ced4da;
 }
 
 .bloqueado:focus {
     box-shadow: none;
-    border-color: #cbd5e0;
-    background-color: #e2e8f0;
+    border-color: #ced4da;
 }

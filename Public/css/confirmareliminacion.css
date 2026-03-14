@@ -1,13 +1,9 @@
 :root {
-  --color-fondo: #f4f7f6;
-  --color-rojo-principal: #e53e3e;
-  --color-rojo-gradiente: linear-gradient(135deg, #fc8181 0%, #c53030 100%);
-  --color-texto-oscuro: #2d3748;
-  --color-texto-suave: #718096;
+  --color-principal: rgb(231, 230, 216);
+  --color-secundario: rgb(238, 238, 9);
+  --color-terciario: rgba(0, 0, 0, 0.349);
+  --color-cuarto: black;
   --fuente: "Poppins", sans-serif;
-  --sombra-tarjeta: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --color-blanco: #ffffff;
-  --color-borde: #e2e8f0;
 }
 
 * {
@@ -19,122 +15,95 @@
 body {
   min-height: 100vh;
   font-family: var(--fuente);
-  background-color: var(--color-fondo);
-  background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
-  background-size: 25px 25px;
+  background-color: var(--color-principal);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
 }
 
 .contenido {
-  background-color: var(--color-blanco);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
+  background-color: var(--color-secundario);
+  border: 2px solid var(--color-cuarto);
+  border-radius: 7px;
+  padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 450px;
-  box-shadow: var(--sombra-tarjeta);
+  gap: 1.2rem;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 .titulo {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: bold;
   text-align: center;
-  color: var(--color-texto-oscuro);
-  margin-bottom: 0.5rem;
+  color: var(--color-cuarto);
 }
 
 .eslogan {
   font-weight: 500;
   text-align: center;
-  font-size: 14px;
-  color: var(--color-texto-suave);
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
+  font-size: 15px;
+  color: var(--color-cuarto);
 }
 
 #formEliminar {
+  border: 2px dashed var(--color-terciario);
+  border-radius: 7px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.8rem;
   width: 100%;
 }
 
 #password,
 #repetir {
+  background-color: var(--color-cuarto);
+  border: none;
+  border-radius: 7px;
+  padding: 8px;
   width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--color-borde);
-  border-radius: 10px;
-  background-color: #f8fafc;
-  font-size: 14px;
-  color: var(--color-texto-oscuro);
-  transition: all 0.3s ease;
-  outline: none;
-}
-
-#password:focus,
-#repetir:focus {
-  border-color: var(--color-rojo-principal);
-  background-color: var(--color-blanco);
-  box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.1);
+  color: var(--color-principal);
+  font-size: 15px;
 }
 
 #password::placeholder,
 #repetir::placeholder {
-  color: #a0aec0;
+  color: var(--color-principal);
+  font-size: 15px;
+  padding-left: 5px;
 }
 
 button {
   border: none;
   cursor: pointer;
-  background: var(--color-rojo-gradiente);
-  color: white;
+  background-color: var(--color-principal);
   font-size: 16px;
-  font-weight: 600;
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  margin-top: 0.5rem;
-  transition: transform 0.1s, opacity 0.2s;
-  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.2);
+  width: 80%;
+  height: 38px;
+  border-radius: 7px;
+  transition: background-color 0.2s;
+  font-weight: bold;
 }
 
 button:hover {
-  opacity: 0.95;
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-a {
-  text-decoration: none;
-  color: #3182ce;
-  font-size: 14px;
-  font-weight: 500;
-  margin-top: 1rem;
-}
-
-a:hover {
-  text-decoration: underline;
+  background-color: rgb(200, 198, 185);
 }
 
 .error {
-  color: #e53e3e;
+  color: red;
   font-family: var(--fuente);
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
-  margin-bottom: 0.8rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   width: 100%;
-  min-height: 20px;
 }
 
 /* ────────────────────────────── */
@@ -144,27 +113,56 @@ a:hover {
 /* Pantallas medianas (tablets y laptops pequeñas) */
 @media (max-width: 1024px) {
   .contenido {
-    max-width: 420px;
+    width: 60%;
   }
 }
 
 /* Pantallas pequeñas (tablets vertical y móviles grandes) */
 @media (max-width: 768px) {
   .contenido {
-    max-width: 380px;
-    padding: 2rem 1.5rem;
+    width: 80%;
+    padding: 1rem 1.5rem;
   }
 
   .titulo {
-    font-size: 22px;
+    font-size: 24px;
+  }
+
+  .eslogan {
+    font-size: 14px;
+  }
+
+  button {
+    width: 85%;
+    font-size: 15px;
   }
 }
 
 /* Móviles chicos */
 @media (max-width: 480px) {
   .contenido {
-    max-width: 100%;
-    padding: 1.5rem 1rem;
-    border-radius: 12px;
+    width: 90%;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .titulo {
+    font-size: 20px;
+  }
+
+  .eslogan {
+    font-size: 13px;
+  }
+
+  #password,
+  #repetir {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  button {
+    width: 100%;
+    height: 36px;
+    font-size: 14px;
   }
 }

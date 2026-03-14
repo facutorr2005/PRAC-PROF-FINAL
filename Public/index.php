@@ -55,9 +55,6 @@ $router->get('/compras/qr/{id}', [ComprasController::class, 'qr']);
 $router->get('/compras/detalle/{id}', [ComprasController::class, 'detalle']);
 // Ruta para procesar el cambio de clave
 $router->post('/perfil/cambiar-password', [\App\Controllers\UsuariosController::class, 'procesarCambioPassword']);
-// Ruta para procesar actualización de perfil
-$router->post('/perfil/actualizar-datos', [\App\Controllers\UsuariosController::class, 'actualizarPerfil']);
-
 // Normalizar path: quitar BASE_URL del REQUEST_URI
 $uriFull = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $base    = rtrim(BASE_URL, '/'); // /PRAC-PROF-FINAL/Public

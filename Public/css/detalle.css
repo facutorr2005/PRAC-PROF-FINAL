@@ -1,56 +1,51 @@
+/* 1. Definimos tus variables de marca */
 :root {
-  --color-fondo: #f4f7f6;
-  --color-verde-principal: #39b54a;
-  --color-verde-gradiente: linear-gradient(135deg, #44c756 0%, #2e9e3d 100%);
-  --color-texto-oscuro: #2d3748;
-  --color-texto-suave: #718096;
-  --fuente: "Poppins", sans-serif;
-  --sombra-tarjeta: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --color-blanco: #ffffff;
-  --color-borde: #e2e8f0;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    --color-principal: rgb(231, 230, 216);    /* Beige de fondo */
+    --color-secundario: rgb(238, 238, 9);     /* Amarillo chillón */
+    --color-terciario: rgba(0, 0, 0, 0.349);  /* Gris/Sombra */
+    --color-cuarto: black;                    /* Negro puro */
+    --fuente: 'Poppins', sans-serif;
 }
 
 body {
     font-family: var(--fuente);
-    background-color: var(--color-fondo);
-    background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
-    background-size: 25px 25px;
+    background-color: var(--color-principal); /* Fondo Beige */
+    margin: 0;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
 }
 
 .detalle-container {
     width: 100%;
-    max-width: 600px;
-    background-color: var(--color-blanco);
-    padding: 2.5rem;
-    border: 1px solid var(--color-borde);
-    border-radius: 16px;
-    box-shadow: var(--sombra-tarjeta);
+    max-width: 700px;
+    /* CAMBIO 1: El fondo del contenedor ahora es AMARILLO */
+    background-color: var(--color-secundario);
+    padding: 2rem;
+    
+    /* Bordes gruesos y sombra */
+    border: 3px solid var(--color-cuarto);
+    border-radius: 10px;
+    box-shadow: 4px 4px 0px var(--color-terciario);
 }
 
 h1 {
     text-align: center;
-    color: var(--color-verde-principal);
-    margin-bottom: 25px;
-    font-size: 1.8rem;
-    font-weight: 700;
+    color: var(--color-cuarto);
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* --- Lista de productos --- */
 .lista-productos {
     margin-top: 20px;
-    border-top: 1px solid var(--color-borde);
-    padding-top: 15px;
+    border-top: 3px solid var(--color-cuarto);
+    padding-top: 10px;
 }
 
 .producto {
@@ -58,7 +53,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding: 15px 0;
-    border-bottom: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-cuarto); /* Línea negra un poco más notoria sobre amarillo */
 }
 
 .producto:last-child {
@@ -66,49 +61,51 @@ h1 {
 }
 
 .producto-info {
-    font-size: 1.05em;
-    font-weight: 500;
-    color: var(--color-texto-oscuro);
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-cuarto);
     flex: 1;
 }
 
 .producto-datos {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .producto-cantidad {
-    color: var(--color-texto-suave);
+    color: #555;
     font-weight: 600;
-    background-color: #f8fafc;
-    padding: 4px 10px;
-    border-radius: 6px;
+    /* CAMBIO EXTRA: Fondo blanco para que resalte sobre el amarillo */
+    background-color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
     font-size: 0.9em;
-    border: 1px solid var(--color-borde);
+    border: 2px solid var(--color-cuarto); /* Le agregué un bordecito negro para definición */
 }
 
 .producto-precio {
-    font-weight: 600;
-    color: var(--color-texto-oscuro);
-    font-size: 1.05em;
-    min-width: 80px;
+    font-weight: bold;
+    color: var(--color-cuarto);
+    font-size: 1.1em;
+    min-width: 90px;
     text-align: right;
 }
 
 /* --- Total --- */
 .total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.3em;
-    font-weight: 700;
+    text-align: right;
+    font-size: 1.5em;
+    font-weight: bold;
     margin-top: 20px;
-    color: var(--color-verde-principal);
-    background-color: #f8fafc;
-    padding: 15px 20px;
-    border-radius: 10px;
-    border: 1px solid var(--color-borde);
+    padding-top: 20px;
+    border-top: 3px solid var(--color-cuarto);
+    color: var(--color-cuarto);
+    /* CAMBIO EXTRA: La caja del total ahora es BLANCA para resaltar */
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 3px solid var(--color-cuarto); /* Borde más grueso para igualar el estilo */
 }
 
 /* --- Botón Volver --- */
@@ -120,22 +117,28 @@ h1 {
 .btn-volver {
     display: inline-block;
     text-decoration: none;
-    background: var(--color-verde-gradiente);
-    color: white;
-    padding: 12px 30px;
-    border-radius: 10px;
-    font-weight: 600;
+    /* CAMBIO 2: El botón ahora es BLANCO */
+    background-color: white;
+    color: var(--color-cuarto);               /* Texto NEGRO */
+    padding: 10px 30px;
+    border-radius: 7px;
+    font-weight: bold;
     font-size: 1rem;
-    transition: transform 0.1s, opacity 0.2s;
-    box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
+    border: 3px solid var(--color-cuarto);    /* Borde negro grueso */
+    transition: all 0.2s ease;
+    box-shadow: 3px 3px 0px var(--color-terciario);
 }
 
 .btn-volver:hover {
-    opacity: 0.95;
+    /* Al pasar el mouse, se pone amarillo (efecto inverso) */
+    background-color: rgb(172, 170, 170);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--color-terciario);
 }
 
 .btn-volver:active {
-    transform: scale(0.98);
+    transform: translate(0, 0);
+    box-shadow: 2px 2px 0px var(--color-terciario);
 }
 
 /* Responsividad */
@@ -147,7 +150,7 @@ h1 {
     .producto {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 8px;
     }
     
     .producto-datos {
@@ -157,11 +160,5 @@ h1 {
     
     h1 {
         font-size: 1.5rem;
-    }
-
-    .total {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: flex-start;
     }
 }

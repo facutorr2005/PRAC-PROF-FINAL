@@ -38,7 +38,7 @@
     <div class="contenidoPerfil">
         <div class="perfilTitulo">Mi Perfil</div>
 
-        <form action="<?= url('/perfil/actualizar-datos') ?>" method="POST" class="formularioPerfil">
+        <div class="formularioPerfil">
             
             <div class="grupoCampo">
                 <div class="etiquetaCampo">Correo (No modificable):</div>
@@ -47,31 +47,28 @@
 
             <div class="grupoCampo">
                 <div class="etiquetaCampo">Nombre:</div>
-                <input type="text" name="nombre" value="<?= htmlspecialchars($user['Nombre'] ?? '') ?>" class="entradaCampo" required>
+                <input type="text" value="<?= htmlspecialchars($user['Nombre'] ?? '') ?>" class="entradaCampo bloqueado" disabled>
             </div>
 
             <div class="grupoCampo">
                 <div class="etiquetaCampo">Apellido:</div>
-                <input type="text" name="apellido" value="<?= htmlspecialchars($user['Apellido'] ?? '') ?>" class="entradaCampo" required>
+                <input type="text" value="<?= htmlspecialchars($user['Apellido'] ?? '') ?>" class="entradaCampo bloqueado" disabled>
             </div>
             <div class="grupoCampo">
                 <div class="etiquetaCampo">Fecha de nacimiento:</div>
-                    <input type="date" name="fecha_nacimiento"
+                    <input type="date" 
                        value="<?= !empty($user['FechaNacimiento']) ? date('Y-m-d', strtotime($user['FechaNacimiento'])) : '' ?>" 
-                       class="entradaCampo" required>
+                       class="entradaCampo bloqueado" 
+                       disabled>
             </div>
 
             <div class="grupoCampo">
                 <div class="etiquetaCampo">DNI:</div>
-                <input type="text" name="dni"
+                <input type="text" 
                        value="<?= htmlspecialchars($user['DNI'] ?? $user['Dni'] ?? '') ?>" 
-                       class="entradaCampo" required>
+                       class="entradaCampo bloqueado" 
+                       disabled>
             </div>
-
-            <div class="grupoCampo">
-                <button type="submit" class="boton guardarBoton">Guardar Cambios Personales</button>
-            </div>
-        </form>
 
         <hr style="border: 1px dashed #ccc; margin: 10px 0;">
 

@@ -1,107 +1,83 @@
-:root {
-  --color-fondo: #f4f7f6;
-  --color-verde-principal: #39b54a;
-  --color-verde-gradiente: linear-gradient(135deg, #44c756 0%, #2e9e3d 100%);
-  --color-texto-oscuro: #2d3748;
-  --color-texto-suave: #718096;
-  --fuente: "Poppins", sans-serif;
-  --sombra-tarjeta: 0 10px 25px rgba(0, 0, 0, 0.08);
-  --color-blanco: #ffffff;
-  --color-borde: #e2e8f0;
-}
-
+/* Agregamos esto para que el padding no aumente el tamaño total de los elementos */
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
-    font-family: var(--fuente);
-    background-color: var(--color-fondo);
-    background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
-    background-size: 25px 25px;
+    font-family: sans-serif;
+    background: #f0f0f0;
+    margin: 0;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Cambiamos height por min-height para evitar cortes en pantallas horizontales */
     min-height: 100vh; 
-    padding: 20px;
 }
 
 .qr-container {
-    background: var(--color-blanco);
-    padding: 2.5rem 2rem;
-    border-radius: 16px;
-    box-shadow: var(--sombra-tarjeta);
-    border: 1px solid var(--color-borde);
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     text-align: center;
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
+    
+    /* --- INICIO RESPONSIVIDAD --- */
+    width: 90%;          /* Ocupa el 90% del ancho en celulares */
+    max-width: 400px;    /* Pero nunca crece más de 400px en PC */
+    margin: auto;        /* Centrado extra por seguridad */
+    /* --- FIN RESPONSIVIDAD --- */
 }
 
 h1 {
     margin-bottom: 20px;
-    font-size: clamp(1.4rem, 5vw, 1.8rem);
-    color: var(--color-texto-oscuro);
-    font-weight: 600;
+    /* Hacemos que el título se achique si la pantalla es muy angosta */
+    font-size: clamp(1.5rem, 5vw, 2rem);
 }
 
 #qrcode {
-    margin: 25px auto;
+    margin: 20px auto;
+    /* Hacemos el QR fluido */
     max-width: 100%;     
     height: auto;        
-    width: 240px;
-    padding: 15px;
-    background: white;
-    border: 1px solid var(--color-borde);
-    border-radius: 12px;
+    /* Mantenemos el tamaño original si hay espacio, pero permitimos que se achique */
+    width: 256px; 
 }
 
+/* Aseguramos que la imagen dentro del div qrcode (si es una img) también responda */
 #qrcode img {
     max-width: 100%;
     height: auto;
-    display: block;
-    margin: 0 auto;
 }
 
 .boton {
     display: inline-block;
-    background: var(--color-verde-gradiente);
+    background-color: #007bff;
     color: white;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
-    margin-top: 15px;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: transform 0.1s, opacity 0.2s;
-    width: 100%;
-    box-shadow: 0 4px 12px rgba(57, 181, 74, 0.2);
+    margin-top: 20px;
+    
+    /* Mejoramos el botón en móviles para que sea más fácil de tocar */
+    transition: background-color 0.3s ease;
+    width: 100%;         /* En celular ocupa todo el ancho */
+    max-width: 200px;    /* En PC tiene un tamaño normal */
 }
 
 .boton:hover {
-    opacity: 0.95;
+    background-color: #0056b3;
 }
 
-.boton:active {
-    transform: scale(0.98);
-}
-
-/* --- MEDIA QUERY PARA PANTALLAS MUY PEQUEÑAS --- */
+/* --- MEDIA QUERY PARA PANTALLAS MUY PEQUEÑAS (Móviles antiguos) --- */
 @media (max-width: 400px) {
     .qr-container {
-        padding: 1.5rem;
+        padding: 20px; /* Reducimos padding para ganar espacio */
     }
     
     h1 {
         margin-bottom: 15px;
-    }
-
-    #qrcode {
-        width: 200px;
-        padding: 10px;
     }
 }
