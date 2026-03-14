@@ -89,8 +89,10 @@ TRUNCATE TABLE `recuperacion_contrasena`;
 DROP TABLE IF EXISTS `transacciones`;
 CREATE TABLE IF NOT EXISTS `transacciones` (
   `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(10) UNSIGNED NOT NULL,
   `Momento` datetime NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`ID`),
+  KEY `fk_tx_usuario` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -136,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `DNI` varchar(50) DEFAULT NULL,
   `FechaNacimiento` date DEFAULT NULL,
   `PasswordHash` varchar(255) NOT NULL,
+  `Estado` ENUM('activo', 'inactivo') NOT NULL DEFAULT 'activo',
   `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
   `UpdatedAt` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`ID`),
@@ -165,6 +168,12 @@ INSERT INTO `usuarios` (`ID`, `Nombre`, `Apellido`, `Email`, `DNI`, `FechaNacimi
 --
 ALTER TABLE `recuperacion_contrasena`
   ADD CONSTRAINT `fk_recuperacion_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`ID`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `transacciones`
+--
+ALTER TABLE `transacciones`
+  ADD CONSTRAINT `fk_tx_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`ID`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `transacciones_detalles`

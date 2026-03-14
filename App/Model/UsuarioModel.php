@@ -24,9 +24,10 @@ class UsuarioModel{
     
     /** Devuelve usuario por email (o null si no existe) */
     public function obtenerPorEmail(string $email): ?array{
+        // Se agrega "Estado = 'activo'" para evitar que usuarios inactivos puedan iniciar sesión.
         $sql = "SELECT Id, Nombre, Apellido, Email, PasswordHash, DNI, FechaNacimiento
                 FROM usuarios
-                WHERE Email = ?
+                WHERE Email = ? AND Estado = 'activo'
                 LIMIT 1";
                 
         $st = $this->db->prepare($sql);
@@ -44,6 +45,7 @@ class UsuarioModel{
     public function emailExiste(string $email): bool{
 
         // Unificada a columna Email (antes decía Correo)
+        // Se busca en todos los usuarios, activos o inactivos, para que la DB no tire error de clave única
         $sql = "SELECT 1 FROM usuarios WHERE Email = ? LIMIT 1";
         $st  = $this->db->prepare($sql);
         $st->execute([$email]);
@@ -182,7 +184,8 @@ class UsuarioModel{
     }
 
     public function findById(int $id): ?array {
-        $sql = "SELECT * FROM usuarios WHERE Id = :id LIMIT 1";
+        // Solo retornamos el usuario si está activo
+        $sql = "SELECT * FROM usuarios WHERE Id = :id AND Estado = 'activo' LIMIT 1";
         $st = $this->db->prepare($sql);
         $st->execute([':id' => $id]);
         $row = $st->fetch(\PDO::FETCH_ASSOC);
@@ -190,15 +193,11 @@ class UsuarioModel{
     }
 
     public function eliminarPorId(int $id): bool {
-        // Si tenés tablas relacionadas (recuperaciones, etc.) y NO hay FK ON DELETE CASCADE,
-        // borrá primero los registros hijos.
+        // En lugar de hacer DELETE de los registros, se usa baja lógica (soft delete).
+        // Se actualiza el estado a inactivo para no perder el historial de compras (transacciones).
         $this->db->beginTransaction();
         try {
-            // ejemplo si tuvieras tabla de recuperación:
-            // $this->db->prepare("DELETE FROM recuperaciones WHERE id_usuario = :id")
-            //          ->execute([':id' => $id]);
-
-            $ok = $this->db->prepare("DELETE FROM usuarios WHERE Id = :id")
+            $ok = $this->db->prepare("UPDATE usuarios SET Estado = 'inactivo' WHERE Id = :id")
                        ->execute([':id' => $id]);
 
             $this->db->commit();
