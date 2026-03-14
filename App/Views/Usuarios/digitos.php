@@ -98,7 +98,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
   });
 
   // Temporizador 10 minutos
-  let tiempo = 10 * 60;
+  let tiempo = 15 * 60;
   const temporizador = document.getElementById('temporizador');
 
   const interval = setInterval(() => {
